@@ -1,0 +1,52 @@
+template:
+    url: https://github.com/siriusphp/Template-ReadTheDocs
+
+# List of directories to exclude from the processing (default contains "vendor" and "website")
+# Paths are relative to the repository root
+exclude:
+    - website
+    - vendor
+    - test
+    - src
+    - build
+
+# Base URL of the published website (no "/" at the end!)
+# You are advised to set and use this variable to write your links in the HTML layouts
+baseUrl: https://www.sirius.ro/php/sirius/stack_runner
+paypal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SGXDKNJCXFPJU
+gacode: UA-535999-18
+
+projectName: Sirius\StackRunner
+title: Sirius\StackRunner
+subTitle: Implementation of various stack patterns (pipelines, middleware, events)
+
+# The left menu bar
+menu:
+    sections:
+#        versions:
+#            name: Versions
+#            items:
+#                two:
+#                    text: "2.0"
+#                    relativeUrl:
+#                one:
+#                    text: "1.0"
+#                    relativeUrl: 1_0/
+        guide:
+            name: Getting started
+            items:
+                getting_started:
+                    text: Introduction
+                    relativeUrl:
+                stack:
+                    text: The callable stack
+                    relativeUrl: 1_the_stack.html
+                stack_locators:
+                    text: The stack locators
+                    relativeUrl: 2_stack_locators.html
+                modifiers:
+                    text: Callable modifiers
+                    relativeUrl: 3_callable_modifiers.html
+                invoker:
+                    text: The callable invokers
+                    relativeUrl: 4_the_invoker.html

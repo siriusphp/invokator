@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  ### PHP ###################################################
+  php:
+    build:
+      context: ./
+    container_name: stack_runner_php
+    volumes:
+      - ./:/var/www/html:delegated
+    ports:
+      - "9099:9000"
+
+#Volumes
+volumes:
+  local:
+    driver: local
