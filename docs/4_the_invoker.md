@@ -40,4 +40,7 @@ This for when you want to use as an argument in a different position than the po
 
 For an example, check the documentation for the ["with arguments" modifier](3_callable_modifiers.md)
 
+## Extending the invoker
+
+
 [Next: The simple stack runner](3_simple_runner.md)

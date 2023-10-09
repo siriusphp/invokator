@@ -32,4 +32,4 @@ While this example is for HTTP middleware, it does not implement the [PSR-15 mid
 
 The example above can easily handle both the single-pass and double-pass types of [HTTP middleware](https://www.php-fig.org/psr/psr-15/meta/)
 
-[Next: Actions a la Wordpress](2_4_wordpress_actions.md)
+[Next: Event dispatcher](2_3_event_dispatcher.md)

@@ -53,6 +53,9 @@ menu:
                 middlewares:
                     text: "- Middlewares"
                     relativeUrl: 2_3_middlewares.html
+                event_dispatcher:
+                    text: "- Event dispatcher"
+                    relativeUrl: 2_3_event_dispatcher.html
                 actions:
                     text: "- Actions a la Wordpress"
                     relativeUrl: 2_4_wordpress_actions.html

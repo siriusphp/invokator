@@ -27,28 +27,29 @@ In the case of events, an `event` object is passed through each callable in the 
 
 ```php
 use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\PipelineRunner;
+use Sirius\StackRunner\Processors\PipelineProcessor;
 use Sirius\StackRunner\Stack;
 
 $container = app(); // your application DI container
 $invoker = new Invoker($container)
-$runner = new PipelineRunner($invoker);
+$processor = new PipelineProcessor($invoker);
 
-$stack = Stack::make([
-    'trim',                     // regular function
-    'Str::toUppercase',         // static method
-    fn($value) => {             // anonymous function
-        return $value . '!!!';
-    },
-    'Logger@info',              // object retrieved from the container
-])
+$stack = new Stack();
+$stack->add('trim');
+$stack->add('Str::toUppercase');
+$stack->add(fn($value) => {             // anonymous function
+    return $value . '!!!';
+});
+$stack->add('Logger@info');
 
-$runner($stack, "  hello world  "); // returns `HELLO WORLD!!!`
+$processor->process($stack, "  hello world  "); // returns `HELLO WORLD!!!`
 ```
 
-The stack runners are very simple and it's easy to build your own
-
-## Links
+## Where to next?
 
 - [documentation](https://sirius.ro/php/sirius/stack_runner/)
 - [changelog](CHANGELOG.md)
+
+## Todo
+- [] Implement resumable pipelines
+- [] Document other use cases
