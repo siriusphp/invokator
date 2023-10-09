@@ -14,7 +14,7 @@ The `Sirius\StackRunner` library comes with a bunch of modifiers that allow you 
 
 ## The "limit arguments" modifier
 
-This modifier will limit the number of arguments passed to the callables. If your stack starts the execution with 5 arguments and the signature of a callable only has one parameter you have to use the `LimitArguments` modifier
+This modifier will limit the number of arguments passed to the callables. If your stack starts the execution with 5 arguments and the signature of a callable has only one parameter you have to use the `LimitArguments` modifier
 
 ```php
 use function Sirius\StackRunner\limit_arguments;
@@ -72,7 +72,7 @@ $locator->process('stack', $param_1, $param_2);
 
 ## The "with arguments" modifier
 
-This modifier can be used when you have a callable that has a specific signature and you don't want to wrap change its signature nor do you want to wrap it inside an anonymous function (eg: because you want to serialize the stack)
+This modifier can be used when you have a callable that has a specific signature, and you don't want to wrap change its signature nor do you want to wrap it inside an anonymous function (eg: because you want to serialize the stack)
 
 ```php
 use function Sirius\StackRunner\with_arguments;
@@ -85,7 +85,7 @@ $locator->process('stack', $param_1, $param_2);
 // This is the same as calling Service@method($param_1, 'value', $container->get('SomeClass'), $param_2)
 ```
 
-The `ref()` function generates an `InvokerReference` object which can be either
+The `ref()` function generates an `InvokerReference` (more on this on the next page) object which can be either
 1. an **integer** in which case it refers to the index of the parameters passed to the stack process method. In this example above the `ref(0)` corresponds to the first parameter.
 2. a **string** in which case it refers to an object from the container. In the example above the invoker will replace `rev('SomeClass')` with the value returned by `$container->get('SomeClass')`
 

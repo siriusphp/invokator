@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sirius\StackRunner\Locators;
@@ -16,7 +17,7 @@ class MiddlewareLocator extends SimpleStackLocator
             if ($stack->isEmpty()) {
                 $response = $this->invoker->invoke($nextCallable, ...$params);
             } else {
-                $next          = fn($result) => $this->processStack($stack, ...$params);
+                $next          = fn ($result) => $this->processStack($stack, ...$params);
                 $paramsForNext = [...$params, $next];
                 $response      = $this->invoker->invoke($nextCallable, ...$paramsForNext);
             }

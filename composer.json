@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0|^8.1|^8.2",
+        "php": "^8.0|^8.1|^8.2",
         "psr/container": "^2.0",
         "psr/event-dispatcher": "^1.0"
     },
@@ -37,7 +37,7 @@
     },
     "scripts": {
         "cs": [
-            "php phpcs.phar --standard=PSR2 ./src"
+            "php phpcs.phar --standard=PSR12 ./src"
         ],
         "md": [
             "php phpmd.phar ./src xml phpmd.xml"

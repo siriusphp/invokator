@@ -20,12 +20,13 @@ All of the above patterns have in common that they are actually a list of callab
 In the case of **middlewares**, the starting parameter (eg: a HTTP request) is passed from one callable to the next, each
 callable having the option to terminate with a result or call the next callable in the stack.
 
-In the case of **pipelines**, the result of each callable is passed to the next callable and the last callable will return the result of the pipeline. The Wordpress' **filter hooks** work similarly to pipelines with the difference that there is a
-"starting value" which can be modified by the callables and all the parameters are being passed to all the callables.
+In the case of **pipelines**, the result of each callable is passed to the next callable and the last callable will return the result of the pipeline. 
 
-In the case of **events**, an `event` object is passed through each callable in the stack and each callable is independent (it doesn't receive the result from the previous item in the stack). The Wordpress' **action hooks** are similar to events as
-the
-callables are not influenced by each other
+The Wordpress' **filter hooks** work similarly to pipelines with the difference that there is a "starting value" which can be modified by the callables and all the parameters are being passed to all the callables.
+
+In the case of **events**, an `event` object is passed through each callable in the stack and each callable is independent (it doesn't receive the result from the previous item in the stack). 
+
+The Wordpress' **action hooks** are similar to events as the callables are not influenced by each other
 
 ### Install using Composer
 

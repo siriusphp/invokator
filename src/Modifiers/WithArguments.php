@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sirius\StackRunner\Modifiers;
 
+use Sirius\StackRunner\ArgumentReference;
 use Sirius\StackRunner\Invoker;
 use Sirius\StackRunner\InvokerAwareInterface;
 use Sirius\StackRunner\InvokerReference;
@@ -31,11 +33,7 @@ class WithArguments implements InvokerAwareInterface
     {
         $pass = [];
         foreach ($this->arguments as $arg) {
-            if ( ! $arg instanceof InvokerReference) {
-                $pass[] = $arg;
-                continue;
-            }
-            if ((int)$arg->reference == $arg->reference) {
+            if ($arg instanceof ArgumentReference) {
                 $pass[] = $params[$arg->reference] ?? null;
                 continue;
             }

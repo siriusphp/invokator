@@ -5,6 +5,7 @@ namespace Sirius\StackRunner\Modifiers;
 use Sirius\StackRunner\Locators\SimpleStackLocator;
 use Sirius\StackRunner\TestCase;
 use function Sirius\StackRunner\ref;
+use function Sirius\StackRunner\arg;
 use function Sirius\StackRunner\result_of;
 use function Sirius\StackRunner\with_arguments;
 
@@ -24,7 +25,7 @@ class WithArgumentsTest extends TestCase
         $locator = new SimpleStackLocator($this->getInvoker());
         $locator->add('test', with_arguments(function ($param_1, $param_2, $param_3, $param_4) {
             static::$results[] = sprintf("anonymous function(%s, %s, %s, %s)", $param_1, $param_2, $param_3, $param_4);
-        }, [ref(1), ref(0), ref('test_param'), 'D']));
+        }, [arg(1), arg(0), ref('test_param'), 'D']));
 
         $locator->process('test', 'A', 'B');
 
@@ -39,7 +40,7 @@ class WithArgumentsTest extends TestCase
         $locator = new SimpleStackLocator($this->getInvoker());
         $locator->add('test', with_arguments(function ($param_1, $param_2, $param_3) {
             static::$results[] = sprintf("anonymous function(%s, %s, %s)", $param_1, $param_2, $param_3);
-        }, [result_of('trim', ['   C   ']), ref(1), ref(0)]));
+        }, [result_of('trim', ['   C   ']), arg(1), arg(0)]));
 
         $locator->process('test', 'A', 'B');
 

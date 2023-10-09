@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sirius\StackRunner\Modifiers;
@@ -21,7 +22,7 @@ class Wrap implements InvokerAwareInterface
 
     public function __invoke(...$params)
     {
-        $next = fn() => $this->invoker->invoke($this->callable, ...$params);
+        $next = fn () => $this->invoker->invoke($this->callable, ...$params);
 
         return call_user_func($this->wrapperCallback, $next);
     }

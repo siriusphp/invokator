@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sirius\StackRunner\Locators;
@@ -7,6 +8,7 @@ use Sirius\StackRunner\Invoker;
 use Sirius\StackRunner\Stack;
 use Sirius\StackRunner\StackRegistryInterface;
 use Sirius\StackRunner\StackRunnerInterface;
+
 use function Sirius\StackRunner\limit_arguments;
 
 class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
@@ -19,7 +21,7 @@ class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
 
     public function get(string $name): Stack
     {
-        if ( ! isset($this->registry[$name])) {
+        if (! isset($this->registry[$name])) {
             $this->registry[$name] = $this->newStack();
         }
 

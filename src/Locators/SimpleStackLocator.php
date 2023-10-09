@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sirius\StackRunner\Locators;
@@ -18,7 +19,7 @@ class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
 
     public function get(string $name): Stack
     {
-        if ( ! isset($this->registry[$name])) {
+        if (! isset($this->registry[$name])) {
             $this->registry[$name] = $this->newStack();
         }
 
