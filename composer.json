@@ -38,7 +38,7 @@
     },
     "scripts": {
         "stan": [
-            "vendor/bin/phpstan analyse"
+            "php vendor/bin/phpstan analyse"
         ],
         "csfix": [
             "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix  --standard=PSR-2 src"
