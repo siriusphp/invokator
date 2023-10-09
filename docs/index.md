@@ -35,7 +35,7 @@ The Wordpress' **action hooks** are similar to events as the callables are not i
 Sirius\StackRunner is available on [Packagist](https://packagist.org/packages/siriusphp/stackrunner). To install it run
 
 ```
-composer require siriusphp/stackrunner
+composer require siriusphp/stack_runner
 ```
 
 [Next: The callable stack](1_the_stack.md)
