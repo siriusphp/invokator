@@ -1,7 +1,7 @@
 # Sirius StackRunner
 
 [![Source Code](http://img.shields.io/badge/source-siriusphp/stackrunner-blue.svg)](https://github.com/siriusphp/stackrunner)
-[![Latest Version](https://img.shields.io/packagist/v/siriusphp/stackrunner.svg)](https://github.com/siriusphp/stackrunner/releases)
+[![Latest Version](https://img.shields.io/packagist/v/siriusphp/stack_runner.svg)](https://github.com/siriusphp/stackrunner/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/siriusphp/stackrunner/blob/master/LICENSE)
 [![Build Status](https://github.com/siriusphp/stackrunner/workflows/CI/badge.svg)](https://github.com/siriusphp/stackrunner/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/siriusphp/stackrunner.svg)](https://packagist.org/packages/siriusphp/stackrunner)
