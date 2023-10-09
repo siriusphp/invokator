@@ -19,7 +19,7 @@ class SimpleStackLocatorTest extends TestCase
 
         $locator->process('test', 'A', 'B');
 
-        return $this->assertSame([
+        $this->assertSame([
             "anonymous function(A, B)",
             SimpleCallables::class . "::staticMethod(A, B)",
             SimpleCallables::class . "@method(A, B)",

@@ -11,16 +11,19 @@ class LimitArguments implements InvokerAwareInterface
 {
     protected Invoker $invoker;
 
-    public function __construct(public $callable, public int $argumentsLimit)
+    public function __construct(public mixed $callable, public int $argumentsLimit)
     {
     }
 
-    public function setInvoker(Invoker $invoker)
+    public function setInvoker(Invoker $invoker): void
     {
         $this->invoker = $invoker;
     }
 
-    public function __invoke(...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function __invoke(...$params): mixed
     {
         $passedParams = array_slice($params, 0, $this->argumentsLimit);
 

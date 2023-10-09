@@ -21,7 +21,7 @@ jobs:
     - name: Setup PHP with fail-fast
       uses: shivammathur/setup-php@v2
       with:
-        phpunit-flags: '--no-coverage'
+        phpunit-flags: 'coverage'
         php-version: ${{ matrix.php }}
         coverage: xdebug
       env:
@@ -45,4 +45,5 @@ jobs:
     - name: Run test suite
       run: |
         mkdir -p build/logs
-        vendor/bin/phpunit -c tests/phpunit.xml
+        composer run stan
+        composer run test

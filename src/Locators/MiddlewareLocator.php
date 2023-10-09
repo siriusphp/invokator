@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Sirius\StackRunner\Locators;
 
+use Sirius\StackRunner\InvalidCallableException;
 use Sirius\StackRunner\Stack;
 
 class MiddlewareLocator extends SimpleStackLocator
 {
-    public function processStack(Stack $stack, ...$params)
+    /**
+     * @param array<mixed> $params
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws InvalidCallableException
+     */
+    public function processStack(Stack $stack, ...$params): mixed
     {
         $result       = null;
         $nextCallable = $stack->extract();

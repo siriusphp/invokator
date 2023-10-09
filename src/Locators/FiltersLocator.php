@@ -13,6 +13,9 @@ use function Sirius\StackRunner\limit_arguments;
 
 class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
 {
+    /**
+     * @var array<Stack>
+     */
     protected $registry = [];
 
     public function __construct(public Invoker $invoker)
@@ -28,7 +31,7 @@ class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
         return $this->registry[$name];
     }
 
-    public function add(string $name, $callable, int $priority = 0, int $argumentsLimit = 1): Stack
+    public function add(string $name, mixed $callable, int $priority = 0, int $argumentsLimit = 1): Stack
     {
         return $this->get($name)->add(limit_arguments($callable, $argumentsLimit), $priority);
     }
@@ -43,12 +46,18 @@ class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
         return clone($this->get($name));
     }
 
-    public function process(string $name, ...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function process(string $name, ...$params): mixed
     {
         return $this->processStack($this->getCopy($name), ...$params);
     }
 
-    public function processStack($stack, ...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function processStack(Stack $stack, ...$params): mixed
     {
         $result       = null;
         $nextCallable = $stack->extract();

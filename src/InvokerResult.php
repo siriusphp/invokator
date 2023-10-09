@@ -6,7 +6,11 @@ namespace Sirius\StackRunner;
 
 class InvokerResult
 {
-    public function __construct(public $callable, public array $params = [])
+    /**
+     * @param mixed $callable
+     * @param array<mixed> $params
+     */
+    public function __construct(public mixed $callable, public array $params = [])
     {
     }
 }

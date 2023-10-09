@@ -6,7 +6,10 @@ namespace Sirius\StackRunner;
 
 class PipelinePromise
 {
-    public function __construct(public $value, public Stack $remainingStack, public array $params, public $retryAfter)
+    /**
+     * @param array<mixed> $params
+     */
+    public function __construct(public mixed $value, public Stack $remainingStack, public array $params, public int $retryAfter)
     {
     }
 }

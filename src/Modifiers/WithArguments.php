@@ -13,23 +13,33 @@ class WithArguments implements InvokerAwareInterface
 {
     protected Invoker $invoker;
 
-    public function __construct(public $callable, public array $arguments)
+    /**
+     * @param array<mixed> $arguments
+     */
+    public function __construct(public mixed $callable, public array $arguments)
     {
     }
 
-    public function setInvoker(Invoker $invoker)
+    public function setInvoker(Invoker $invoker): void
     {
         $this->invoker = $invoker;
     }
 
-    public function __invoke(...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function __invoke(...$params): mixed
     {
         $passedArgs = $this->getPassedArguments($params);
 
         return $this->invoker->invoke($this->callable, ...$passedArgs);
     }
 
-    private function getPassedArguments($params)
+    /**
+     * @param array<mixed> $params
+     * @return array<mixed>
+     */
+    private function getPassedArguments(array $params = []): array
     {
         $pass = [];
         foreach ($this->arguments as $arg) {

@@ -23,6 +23,6 @@ class MiddlewareLocatorTest extends TestCase
 
         $result = $locator->process('test', 'world');
 
-        return $this->assertEquals('Hello World', $result);
+        $this->assertEquals('Hello World', $result);
     }
 }

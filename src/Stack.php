@@ -15,35 +15,40 @@ class Stack extends \SplPriorityQueue
         $this->reversed = $reversed;
     }
 
-    public function add($callable, int $priority = 0)
+    public function add(mixed $callable, int $priority = 0): self
     {
         parent::insert($callable, [$priority, $this->index++]);
 
         return $this;
     }
 
+    /**
+     * @param array<int> $priority1
+     * @param array<int> $priority2
+     */
     public function compare($priority1, $priority2): int
     {
         $sign = $this->reversed ? -1 : 1;
-        if ($sign * $priority1[0] < $sign * $priority2[0]) {
+        if ($sign * ($priority1[0] ?? 0) < $sign * ($priority2[0] ?? 0)) {
             return 1;
         }
-        if ($sign * $priority1[0] > $sign * $priority2[0]) {
+        if ($sign * ($priority1[0] ?? 0) > $sign * ($priority2[0] ?? 0)) {
             return -1;
         }
 
-        return $sign * $priority1[1] < $sign * $priority2[1] ? 1 : -1;
+        return $sign * ($priority1[1] ?? 0) < $sign * ($priority2[1] ?? 0) ? 1 : -1;
     }
 
-    public function __serialize()
+    public function __serialize(): array
     {
         $data         = [];
         $extractFlags = $this->getExtractFlags();
         $this->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
+        /** @var array<mixed> $v */
         foreach ($this as $v) {
             $data[] = [
                 'callable' => $v['data'],
-                'priority' => $v['priority'][0]
+                'priority' => is_array($v['priority']) ? ($v['priority'][0] ?? 0) : 0
             ];
         }
         $this->setExtractFlags($extractFlags);
@@ -51,10 +56,16 @@ class Stack extends \SplPriorityQueue
         return $data;
     }
 
-    public function __unserialize(array $data)
+    /**
+     * @param array<mixed> $data
+     *
+     * @return void
+     */
+    public function __unserialize(array $data): void
     {
+        /** @var array<mixed> $v */
         foreach ($data as $v) {
-            $this->add($v['callable'], $v['priority']);
+            $this->add($v['callable'], intval($v['priority'])); //@phpstan-ignore-line
         }
     }
 }

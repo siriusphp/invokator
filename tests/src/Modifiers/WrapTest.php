@@ -29,7 +29,7 @@ class WrapTest extends TestCase
 
         $locator->process('test', 'A', 'B');
 
-        return $this->assertSame([
+        $this->assertSame([
             'From wrapper function',
             "anonymous function(A, B)",
         ], static::$results);

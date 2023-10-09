@@ -6,5 +6,5 @@ namespace Sirius\StackRunner;
 
 interface InvokerAwareInterface
 {
-    public function setInvoker(Invoker $invoker);
+    public function setInvoker(Invoker $invoker): void;
 }

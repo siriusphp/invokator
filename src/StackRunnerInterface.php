@@ -6,7 +6,13 @@ namespace Sirius\StackRunner;
 
 interface StackRunnerInterface
 {
-    public function process(string $name, ...$params);
+    /**
+     * @param array<mixed> $params
+     */
+    public function process(string $name, ...$params): mixed;
 
-    public function processStack(Stack $stack, ...$params);
+    /**
+     * @param array<mixed> $params
+     */
+    public function processStack(Stack $stack, ...$params): mixed;
 }

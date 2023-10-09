@@ -23,35 +23,44 @@ if (! function_exists('Sirius\StackRunner\arg')) {
     }
 }
 if (! function_exists('Sirius\StackRunner\result_of')) {
-    function result_of($callable, array $params = []): InvokerResult
+    /**
+     * @param array<mixed> $params
+     */
+    function result_of(mixed $callable, array $params = []): InvokerResult
     {
         return new InvokerResult($callable, $params);
     }
 }
 
 if (! function_exists('Sirius\StackRunner\with_arguments')) {
-    function with_arguments($callable, array $arguments): WithArguments
+    /**
+     * @param array<mixed> $arguments
+     */
+    function with_arguments(mixed $callable, array $arguments): WithArguments
     {
         return new WithArguments($callable, $arguments);
     }
 }
 
 if (! function_exists('Sirius\StackRunner\limit_arguments')) {
-    function limit_arguments($callable, int $argumentsLimit): LimitArguments
+    function limit_arguments(mixed $callable, int $argumentsLimit): LimitArguments
     {
         return new LimitArguments($callable, $argumentsLimit);
     }
 }
 
 if (! function_exists('Sirius\StackRunner\once')) {
-    function once($callable): Once
+    function once(mixed $callable): Once
     {
         return new Once($callable);
     }
 }
 
 if (! function_exists('Sirius\StackRunner\wrap')) {
-    function wrap($callable, $wrapperCallback): Wrap
+    /**
+     * @param callable $wrapperCallback
+     */
+    function wrap(mixed $callable, $wrapperCallback): Wrap
     {
         return new Wrap($callable, $wrapperCallback);
     }

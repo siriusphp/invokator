@@ -11,16 +11,23 @@ class Wrap implements InvokerAwareInterface
 {
     protected Invoker $invoker;
 
-    public function __construct(public $callable, public $wrapperCallback)
+    /**
+     * @param mixed $callable
+     * @param callable $wrapperCallback
+     */
+    public function __construct(public mixed $callable, public $wrapperCallback)
     {
     }
 
-    public function setInvoker(Invoker $invoker)
+    public function setInvoker(Invoker $invoker): void
     {
         $this->invoker = $invoker;
     }
 
-    public function __invoke(...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function __invoke(...$params): mixed
     {
         $next = fn () => $this->invoker->invoke($this->callable, ...$params);
 

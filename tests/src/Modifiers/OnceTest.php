@@ -28,7 +28,7 @@ class OnceTest extends TestCase
         $locator->process('test', 'A', 'B');
         $locator->process('test', 'A', 'B');
 
-        return $this->assertSame([
+        $this->assertSame([
             "anonymous function(A, B)",
         ], static::$results);
     }

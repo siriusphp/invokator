@@ -6,7 +6,7 @@ namespace Sirius\StackRunner;
 
 class InvokerReference
 {
-    public function __construct(public string|int $reference)
+    public function __construct(public string $reference)
     {
     }
 }

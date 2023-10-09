@@ -10,7 +10,11 @@ use Sirius\StackRunner\Stack;
 
 class PipelineLocator extends SimpleStackLocator
 {
-    public function processStack(Stack $stack, ...$params)
+    /**
+     * @param array<mixed> $params
+     */
+
+    public function processStack(Stack $stack, ...$params): mixed
     {
         $result       = null;
         $nextCallable = $stack->extract();
@@ -29,9 +33,12 @@ class PipelineLocator extends SimpleStackLocator
         return $result;
     }
 
-    public function resumeStack(Stack $remainingStack, $previousValue, ...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function resumeStack(Stack $remainingStack, mixed $previousValue, ...$params): mixed
     {
-
+        return null;
     }
 
 }

@@ -18,10 +18,12 @@ class Invoker
     }
 
     /**
+     * @param array<mixed> $params
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function invoke($callable, ...$params): mixed
+    public function invoke(mixed $callable, ...$params): mixed
     {
         $args = $this->resolveArguments($params);
 
@@ -34,6 +36,13 @@ class Invoker
         return $callable(...$args);
     }
 
+    /**
+     * @param array<mixed> $params
+     *
+     * @return array<mixed>
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     protected function resolveArguments(array $params): array
     {
         $values = [];
@@ -54,15 +63,17 @@ class Invoker
     /**
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws InvalidCallableException
      */
-    protected function getActualCallable($callable): callable
+    protected function getActualCallable(mixed $callable): callable
     {
         if (is_string($callable) && str_contains($callable, '@')) {
             [$service, $method] = explode('@', $callable, 2);
+            $service = $this->container->get($service);
             if ($service instanceof InvokerAwareInterface) {
                 $service->setInvoker($this);
             }
-            $callable = [$this->container->get($service), $method];
+            $callable = [$service, $method];
         }
 
         // if the callable references an invokable class from the container
@@ -72,6 +83,10 @@ class Invoker
             is_callable($service)
         ) {
             $callable = $service;
+        }
+
+        if (!is_callable($callable)) {
+            throw new InvalidCallableException();
         }
 
         return $callable;

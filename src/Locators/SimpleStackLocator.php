@@ -11,6 +11,9 @@ use Sirius\StackRunner\StackRunnerInterface;
 
 class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
 {
+    /**
+     * @var array<Stack>
+     */
     protected $registry = [];
 
     public function __construct(public Invoker $invoker)
@@ -26,7 +29,7 @@ class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
         return $this->registry[$name];
     }
 
-    public function add(string $name, $callable, int $priority = 0): Stack
+    public function add(string $name, mixed $callable, int $priority = 0): Stack
     {
         return $this->get($name)->add($callable, $priority);
     }
@@ -41,12 +44,18 @@ class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
         return clone($this->get($name));
     }
 
-    public function process(string $name, ...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function process(string $name, ...$params): mixed
     {
         return $this->processStack($this->getCopy($name), ...$params);
     }
 
-    public function processStack(Stack $stack, ...$params)
+    /**
+     * @param array<mixed> $params
+     */
+    public function processStack(Stack $stack, ...$params): mixed
     {
         $nextCallable = $stack->extract();
 
@@ -54,6 +63,8 @@ class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
             $this->invoker->invoke($nextCallable, ...$params);
             $nextCallable = $stack->isEmpty() ? null : $stack->extract();
         }
+
+        return null;
     }
 
 

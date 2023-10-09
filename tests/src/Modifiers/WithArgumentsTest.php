@@ -29,7 +29,7 @@ class WithArgumentsTest extends TestCase
 
         $locator->process('test', 'A', 'B');
 
-        return $this->assertSame([
+        $this->assertSame([
             "anonymous function(B, A, C, D)",
         ], static::$results);
     }
@@ -44,7 +44,7 @@ class WithArgumentsTest extends TestCase
 
         $locator->process('test', 'A', 'B');
 
-        return $this->assertSame([
+        $this->assertSame([
             "anonymous function(C, B, A)",
         ], static::$results);
     }
