@@ -2,9 +2,9 @@
 title: Middlewares
 ---
 
-# The middleware locator
+# Middlewares
 
-This locator has the following characteristics:
+This processor has the following characteristics:
 1. All the parameters are passed down to each of the callables as which means all the callables should have the same signature (although this restriction can be by-passed with **modifiers**)
 2. The second to the last callables receive a `$next` as their last parameter which is a callable that continues the calls from the stack
 3. Each callable may call `$next` or not
@@ -13,19 +13,19 @@ This locator has the following characteristics:
 
 ```php
 use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Locators\MiddlewareLocator;
+use Sirius\StackRunner\Processors\MiddlewareProcessor;
 
 $invoker = new Invoker($psr11Container);
-$locator = new MiddlewareLocator($invoker);
+$processor = new MiddlewareProcessor($invoker);
 
-$locator->get('dispatcher')
+$processor->get('dispatcher')
         ->add('CsrfCheckMiddleware') 
         ->add('TrimStringsMiddleware')
         ->add('AuthMiddleware')
         ->add('CacheMiddleware')
         ->add('RouterMiddleware')
 
-$locator->process('dispatcher', new HttpRequest);
+$processor->process('dispatcher', new HttpRequest);
 ```
 
 While this example is for HTTP middleware, it does not implement the [PSR-15 middleware specifications](https://www.php-fig.org/psr/psr-15/) as it does not enforce their respective signatures. It would be up to your app to enforce those restrictions

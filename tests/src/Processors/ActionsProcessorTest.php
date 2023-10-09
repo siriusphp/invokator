@@ -1,23 +1,23 @@
 <?php
 
-namespace Sirius\StackRunner\Locators;
+namespace Sirius\StackRunner\Processors;
 
 use Sirius\StackRunner\TestCase;
 use Sirius\StackRunner\Utilities\SimpleCallables;
 
-class ActionsLocatorTest extends TestCase
+class ActionsProcessorTest extends TestCase
 {
-    public function test_actions_locator()
+    public function test_actions_processor()
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
-        $locator = new ActionsLocator($this->getInvoker());
-        $locator->add('test', function ($param_1) {
+        $processor = new ActionsProcessor($this->getInvoker());
+        $processor->add('test', function ($param_1) {
             static::$results[] = sprintf("anonymous function(%s)", $param_1);
         }, 0, 1);
-        $locator->add('test', SimpleCallables::class . '::staticMethod', 1, 1);
-        $locator->add('test', SimpleCallables::class . '@method', 1, 2);
+        $processor->add('test', SimpleCallables::class . '::staticMethod', 1, 1);
+        $processor->add('test', SimpleCallables::class . '@method', 1, 2);
 
-        $locator->process('test', 'A', 'B');
+        $processor->process('test', 'A', 'B');
 
         $this->assertSame([
             "anonymous function(A)",

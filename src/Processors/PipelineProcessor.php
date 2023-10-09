@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Locators;
+namespace Sirius\StackRunner\Processors;
 
 use Sirius\StackRunner\DelayedResult;
 use Sirius\StackRunner\PipelinePromise;
 use Sirius\StackRunner\Stack;
 
-class PipelineLocator extends SimpleStackLocator
+class PipelineProcessor extends SimpleStackProcessor
 {
     /**
      * @param array<mixed> $params

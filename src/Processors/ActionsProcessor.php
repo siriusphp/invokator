@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Locators;
+namespace Sirius\StackRunner\Processors;
 
 use Sirius\StackRunner\Invoker;
 use Sirius\StackRunner\Stack;
@@ -11,7 +11,7 @@ use Sirius\StackRunner\StackRunnerInterface;
 
 use function Sirius\StackRunner\limit_arguments;
 
-class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
+class ActionsProcessor implements StackRegistryInterface, StackRunnerInterface
 {
     /**
      * @var array<Stack>
@@ -59,17 +59,15 @@ class FiltersLocator implements StackRegistryInterface, StackRunnerInterface
      */
     public function processStack(Stack $stack, ...$params): mixed
     {
-        $result       = null;
         $nextCallable = $stack->extract();
 
         while ($nextCallable !== null) {
-            $result = $this->invoker->invoke($nextCallable, ...$params);
-
-            $params[0] = $result;
-
+            $this->invoker->invoke($nextCallable, ...$params);
             $nextCallable = $stack->isEmpty() ? null : $stack->extract();
         }
 
-        return $result;
+        return null;
     }
+
+
 }

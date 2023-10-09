@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Locators;
+namespace Sirius\StackRunner\Processors;
 
 use Sirius\StackRunner\Invoker;
 use Sirius\StackRunner\Stack;
 use Sirius\StackRunner\StackRegistryInterface;
 use Sirius\StackRunner\StackRunnerInterface;
 
-use function Sirius\StackRunner\limit_arguments;
-
-class ActionsLocator implements StackRegistryInterface, StackRunnerInterface
+class SimpleStackProcessor implements StackRegistryInterface, StackRunnerInterface
 {
     /**
      * @var array<Stack>
@@ -31,9 +29,9 @@ class ActionsLocator implements StackRegistryInterface, StackRunnerInterface
         return $this->registry[$name];
     }
 
-    public function add(string $name, mixed $callable, int $priority = 0, int $argumentsLimit = 1): Stack
+    public function add(string $name, mixed $callable, int $priority = 0): Stack
     {
-        return $this->get($name)->add(limit_arguments($callable, $argumentsLimit), $priority);
+        return $this->get($name)->add($callable, $priority);
     }
 
     protected function newStack(): Stack

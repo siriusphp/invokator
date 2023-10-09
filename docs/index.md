@@ -4,9 +4,11 @@ title: Sirius\StackRunner. PHP library to control your application flow using pa
 
 #Sirius Stack Runner
 
-[![Source Code](http://img.shields.io/badge/source-siriusphp/stackrunner-blue.svg?style=flat-square)](https://github.com/siriusphp/stackrunner)
-[![Latest Version](https://img.shields.io/packagist/v/siriusphp/stackrunner.svg?style=flat-square)](https://github.com/siriusphp/stackrunner/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/siriusphp/stackrunner/blob/master/LICENSE)
+[![Source Code](http://img.shields.io/badge/source-siriusphp/stackrunner-blue.svg)](https://github.com/siriusphp/stackrunner)
+[![Latest Version](https://img.shields.io/packagist/v/siriusphp/stackrunner.svg)](https://github.com/siriusphp/stackrunner/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/siriusphp/stackrunner/blob/master/LICENSE)
+[![Build Status](https://github.com/siriusphp/stackrunner/workflows/CI/badge.svg)](https://github.com/siriusphp/stackrunner/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/siriusphp/stackrunner.svg)](https://packagist.org/packages/siriusphp/stackrunner)
 
 Sirius StackRunner is a library that implements various patterns that execute a list of commands:
 
@@ -36,13 +38,4 @@ Sirius\StackRunner is available on [Packagist](https://packagist.org/packages/si
 composer require siriusphp/stackrunner
 ```
 
-### Documentation
-
-1. [The callable stack](1_the_stack.md)
-2. [Stack locators](2_stack_locators.md)
-3. [Callable modifiers](3_callable_modifiers.md)
-4. [The callable invoker](4_the_invoker.md)
-5. [Event dispatcher](5_the_event_dispatcher.md)
-6. Advanced topics
-    - [Resumable pipelines](6_resumable_pipelines.md)
-    - [Other usage ideas](6_other_usage_ideas.md)
+[Next: The callable stack](1_the_stack.md)

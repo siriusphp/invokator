@@ -2,7 +2,7 @@
 
 namespace Sirius\StackRunner\Utilities;
 
-use Sirius\StackRunner\SimpleStackLocatorTest;
+use Sirius\StackRunner\SimpleStackProcessorTest;
 use Sirius\StackRunner\TestCase;
 
 class SimpleCallables

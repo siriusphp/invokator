@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Locators;
+namespace Sirius\StackRunner\Processors;
 
 use Sirius\StackRunner\InvalidCallableException;
 use Sirius\StackRunner\Stack;
 
-class MiddlewareLocator extends SimpleStackLocator
+class MiddlewareProcessor extends SimpleStackProcessor
 {
     /**
      * @param array<mixed> $params

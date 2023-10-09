@@ -26,20 +26,17 @@ For this reason it is possible to use services registered in the container by th
 When executing a callback, the invoker object, with go over the arguments passed for the callback and will handle the following special types of parameters:
 
 ##### 1. instances of the `InvokerReference` class. 
-
 This is for when you want to pass a parameter that is actually a reference to an item in the container. It is useful if you don't want to retrieve the item from the container until it is actually 
   needed. 
 
 Such an instance is created using the `Sirius\StackRunner\ref($identifier)` function.
 
-###### 2. instances of the `InvokerResult` class. 
-
+##### 2. instances of the `InvokerResult` class. 
 This for when you want to use as an argument for a callable the result of a computationally expensive function. Such an instance is created using the `Sirius\StackRunner\result_of($callable, [$param_1, 
   $param_2])` function
 
-###### 3. instances of the `ArgumentReference` class. 
-
-This for when you want to use as an argument in a different position than the position that argument was passed on by the locator. Such an instance is created using the `Sirius\StackRunner\arg(2)` function. 
+##### 3. instances of the `ArgumentReference` class. 
+This for when you want to use as an argument in a different position than the position that argument was passed on by the processor. Such an instance is created using the `Sirius\StackRunner\arg(2)` function. 
 
 For an example, check the documentation for the ["with arguments" modifier](3_callable_modifiers.md)
 

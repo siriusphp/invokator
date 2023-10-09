@@ -2,9 +2,9 @@
 title: Simple stacks
 ---
 
-# The simple stack locator
+# The simple processor
 
-This locator has the following characteristics:
+This processor has the following characteristics:
 1. All the parameters are passed down to each of the callables as which means all the callables should have the same signature (although this restriction can be by-passed with **modifiers**)
 2. The values returned by the callables are ignored
 
@@ -12,16 +12,16 @@ This locator has the following characteristics:
 
 ```php
 use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Locators\SimpleStackLocator;
+use Sirius\StackRunner\Processors\SimpleStackProcessor;
 
 $invoker = new Invoker($psr11Container);
-$locator = new SimpleStackLocator($invoker);
+$processor = new SimpleStackProcessor($invoker);
 
-$locator->add('log', 'FileLogger@log') // this returns the Stack
+$processor->add('log', 'FileLogger@log') // this returns the Stack
         ->add('SlackNotification@send')
         ->add('TextNotification@send')
 
-$locator->process('log', $severity, $message, $context);
+$processor->process('log', $severity, $message, $context);
 ```
 
 [Next: Pipelines](2_2_pipelines.md)

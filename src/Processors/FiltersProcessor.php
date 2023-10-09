@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Locators;
+namespace Sirius\StackRunner\Processors;
 
 use Sirius\StackRunner\Invoker;
 use Sirius\StackRunner\Stack;
 use Sirius\StackRunner\StackRegistryInterface;
 use Sirius\StackRunner\StackRunnerInterface;
 
-class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
+use function Sirius\StackRunner\limit_arguments;
+
+class FiltersProcessor implements StackRegistryInterface, StackRunnerInterface
 {
     /**
      * @var array<Stack>
@@ -29,9 +31,9 @@ class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
         return $this->registry[$name];
     }
 
-    public function add(string $name, mixed $callable, int $priority = 0): Stack
+    public function add(string $name, mixed $callable, int $priority = 0, int $argumentsLimit = 1): Stack
     {
-        return $this->get($name)->add($callable, $priority);
+        return $this->get($name)->add(limit_arguments($callable, $argumentsLimit), $priority);
     }
 
     protected function newStack(): Stack
@@ -57,15 +59,17 @@ class SimpleStackLocator implements StackRegistryInterface, StackRunnerInterface
      */
     public function processStack(Stack $stack, ...$params): mixed
     {
+        $result       = null;
         $nextCallable = $stack->extract();
 
         while ($nextCallable !== null) {
-            $this->invoker->invoke($nextCallable, ...$params);
+            $result = $this->invoker->invoke($nextCallable, ...$params);
+
+            $params[0] = $result;
+
             $nextCallable = $stack->isEmpty() ? null : $stack->extract();
         }
 
-        return null;
+        return $result;
     }
-
-
 }

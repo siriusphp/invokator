@@ -41,9 +41,27 @@ menu:
                 stack:
                     text: The callable stack
                     relativeUrl: 1_the_stack.html
-                stack_locators:
-                    text: The stack locators
-                    relativeUrl: 2_stack_locators.html
+                stack_processors:
+                    text: The stack processors
+                    relativeUrl: 2_stack_processors.html
+                simple_stacks:
+                    text: "- Simple stacks"
+                    relativeUrl: 2_1_simple_stacks.html
+                pipelines:
+                    text: "- Pipelines"
+                    relativeUrl: 2_2_pipelines.html
+                middlewares:
+                    text: "- Middlewares"
+                    relativeUrl: 2_3_middlewares.html
+                actions:
+                    text: "- Actions a la Wordpress"
+                    relativeUrl: 2_4_wordpress_actions.html
+                filters:
+                    text: "- Filters a la Wordpress"
+                    relativeUrl: 2_5_wordpress_filters.html
+                custom_stacks:
+                    text: "- Custom processors"
+                    relativeUrl: 2_6_custom_processors.html
                 modifiers:
                     text: Callable modifiers
                     relativeUrl: 3_callable_modifiers.html

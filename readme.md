@@ -4,8 +4,6 @@
 [![Latest Version](https://img.shields.io/packagist/v/siriusphp/stackrunner.svg)](https://github.com/siriusphp/stackrunner/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/siriusphp/stackrunner/blob/master/LICENSE)
 [![Build Status](https://github.com/siriusphp/stackrunner/workflows/CI/badge.svg)](https://github.com/siriusphp/stackrunner/actions)
-[![Coverage Status](https://scrutinizer-ci.com/g/siriusphp/stackrunner/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/siriusphp/stackrunner/code-structure)
-[![Quality Score](https://scrutinizer-ci.com/g/siriusphp/stackrunner/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/siriusphp/stackrunner)
 [![Total Downloads](https://img.shields.io/packagist/dt/siriusphp/stackrunner.svg)](https://packagist.org/packages/siriusphp/stackrunner)
 
 Sirius StackRunner is a library that implements various patterns that execute a list of commands:
@@ -52,5 +50,5 @@ The stack runners are very simple and it's easy to build your own
 
 ## Links
 
-- [documentation](https://sirius.ro/php/sirius/stackrunner/)
+- [documentation](https://sirius.ro/php/sirius/stack_runner/)
 - [changelog](CHANGELOG.md)

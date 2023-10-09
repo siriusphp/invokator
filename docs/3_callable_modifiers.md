@@ -19,21 +19,21 @@ This modifier will limit the number of arguments passed to the callables. If you
 ```php
 use function Sirius\StackRunner\limit_arguments;
 use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Locators\SimpleStackLocator;
+use Sirius\StackRunner\Processors\SimpleStackProcessor;
 
 $invoker = new Invoker($psr11Container);
-$locator = new SimpleStackLocator($invoker);
+$processor = new SimpleStackProcessor($invoker);
 
-$locator->get('stack')
+$processor->get('stack')
         ->add(limit_arguments(function($param_1, $param2) {
             return 'something'
         }, 2));
         ->add(limit_arguments('Service@method', 1));
 
-$locator->process('stack', $param_1, $param_2, $param_3, $param_4);
+$processor->process('stack', $param_1, $param_2, $param_3, $param_4);
 ```
 
-This modifier is used by the "actions locator" and the "filters locator"
+This modifier is used by the "actions processor" and the "filters processor"
 
 ## The "once" modifier
 
@@ -45,13 +45,13 @@ It is useful for an events system where you want a particular listener to be exe
 
 ```php
 use function Sirius\StackRunner\once;
-$locator->get('event')
+$processor->get('event')
         ->add(once(function($param_1, $param2) {
             return 'something'
         }, 2));
         ->add(limit_arguments('Service@method', 1));
 
-$locator->process('event', $param_1, $param_2);
+$processor->process('event', $param_1, $param_2);
 ```
 
 ## The "wrap" modifier
@@ -62,12 +62,12 @@ This can be used to override how the callable is actually being executed by pass
 
 ```php
 use function Sirius\StackRunner\wrap;
-$locator->get('stack')
+$processor->get('stack')
         ->add(wrap('Service@method', function(callable $callable) use ($param_1, $param_2) {
             return $callable($param_1, $param_2);
         }, 2));
 
-$locator->process('stack', $param_1, $param_2);
+$processor->process('stack', $param_1, $param_2);
 ```
 
 ## The "with arguments" modifier
@@ -77,10 +77,10 @@ This modifier can be used when you have a callable that has a specific signature
 ```php
 use function Sirius\StackRunner\with_arguments;
 use function Sirius\StackRunner\ref;
-$locator->get('stack')
+$processor->get('stack')
         ->add(with_arguments('Service@method', [ref(0), 'value', ref('SomeClass'), ref(1)]);
 
-$locator->process('stack', $param_1, $param_2);
+$processor->process('stack', $param_1, $param_2);
 
 // This is the same as calling Service@method($param_1, 'value', $container->get('SomeClass'), $param_2)
 ```

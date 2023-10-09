@@ -2,7 +2,7 @@
 
 namespace Sirius\StackRunner;
 
-use Sirius\StackRunner\Locators\SimpleStackLocator;
+use Sirius\StackRunner\Processors\SimpleStackProcessor;
 use Sirius\StackRunner\Utilities\SimpleCallables;
 
 class WrapTest extends TestCase
@@ -18,8 +18,8 @@ class WrapTest extends TestCase
     public function test_modifier()
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
-        $locator = new SimpleStackLocator($this->getInvoker());
-        $locator->add('test', wrap(function ($param_1, $param_2) {
+        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor->add('test', wrap(function ($param_1, $param_2) {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         }, function ($next) {
             static::$results[] = 'From wrapper function';
@@ -27,7 +27,7 @@ class WrapTest extends TestCase
             return $next();
         }));
 
-        $locator->process('test', 'A', 'B');
+        $processor->process('test', 'A', 'B');
 
         $this->assertSame([
             'From wrapper function',

@@ -63,19 +63,19 @@ A callable with a higher priority will be executed before a callable with a lowe
 
 ## Executing a stack
 
-The `Sirius\StackRunner` library comes with a few **stack locators** which are act as stack registries/repositories and stack executors.
+The `Sirius\StackRunner` library comes with a few **stack processors** which are act as stack registries/repositories and stack executors.
 
 ```php
-use Sirius\StackRunner\Locators\PipelineLocator;
+use Sirius\StackRunner\Processors\PipelineProcessor;
 use Sirius\StackRunner\Invoker;
 
 // this is required for callables like "SomeClass@someMethod"
 // and by callables that have dependencies
 $invoker = new Invoker($yourChoiceOfDependencyInjectionContainer);
-$locator = new PipelineLocator($invoker);
+$processor = new PipelineProcessor($invoker);
 
 // execute the $stack created above as a pipeline with one parameter
-$locator->processStack($stack, ' world '); 
+$processor->processStack($stack, ' world '); 
 
 // this will
 // 1. create string `HELLO WORLD`,
@@ -83,6 +83,6 @@ $locator->processStack($stack, ' world ');
 // 3. send it to a SlackChannel
 ```
 
-Each type of stack locator has its own quirks that you can learn on the next page.
+Each type of stack processor has its own quirks that you can learn on the next page.
 
-[Next: The stack_locators](2_stack_locators.md)
+[Next: The stack_processors](2_stack_processors.md)
