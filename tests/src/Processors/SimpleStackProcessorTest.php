@@ -25,4 +25,23 @@ class SimpleStackProcessorTest extends TestCase
             SimpleCallables::class . "@method(A, B)",
         ], static::$results);
     }
+
+    public function test_execution_priority()
+    {
+        $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
+        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor->add('test', function ($param_1, $param_2) {
+            static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
+        });
+        $processor->add('test', SimpleCallables::class . '@method', 100);
+        $processor->add('test', SimpleCallables::class . '::staticMethod');
+
+        $processor->process('test', 'A', 'B');
+
+        $this->assertSame([
+            SimpleCallables::class . "@method(A, B)",
+            "anonymous function(A, B)",
+            SimpleCallables::class . "::staticMethod(A, B)",
+        ], static::$results);
+    }
 }

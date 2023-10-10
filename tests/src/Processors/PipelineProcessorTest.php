@@ -13,7 +13,7 @@ class PipelineProcessorTest extends TestCase
         $processor = new PipelineProcessor($this->getInvoker());
         $processor->add('test', function ($name) {
             return '   hello ' . $name;
-        }, 0, 1);
+        }, 1, 1);
         $processor->add('test', 'trim', 1);
         $processor->add('test', 'ucwords', 1);
 

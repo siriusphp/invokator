@@ -12,10 +12,10 @@ class ActionsProcessorTest extends TestCase
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
         $processor = new ActionsProcessor($this->getInvoker());
         $processor->add('test', function ($param_1) {
-            static::$results[] = sprintf("anonymous function(%s)", $param_1);
+            static::$results[] = sprintf("anonymous function(%s)", $param_1, 1);
         }, 0, 1);
-        $processor->add('test', SimpleCallables::class . '::staticMethod', 1, 1);
-        $processor->add('test', SimpleCallables::class . '@method', 1, 2);
+        $processor->add('test', SimpleCallables::class . '::staticMethod', 0, 1);
+        $processor->add('test', SimpleCallables::class . '@method', 0, 2);
 
         $processor->process('test', 'A', 'B');
 

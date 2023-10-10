@@ -30,10 +30,10 @@ class Stack extends \SplPriorityQueue
     {
         $sign = $this->reversed ? -1 : 1;
         if ($sign * ($priority1[0] ?? 0) < $sign * ($priority2[0] ?? 0)) {
-            return 1;
+            return -1;
         }
         if ($sign * ($priority1[0] ?? 0) > $sign * ($priority2[0] ?? 0)) {
-            return -1;
+            return 1;
         }
 
         return $sign * ($priority1[1] ?? 0) < $sign * ($priority2[1] ?? 0) ? 1 : -1;

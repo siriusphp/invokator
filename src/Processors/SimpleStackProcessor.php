@@ -58,7 +58,6 @@ class SimpleStackProcessor implements StackRegistryInterface, StackRunnerInterfa
     public function processStack(Stack $stack, ...$params): mixed
     {
         $nextCallable = $stack->extract();
-
         while ($nextCallable !== null) {
             $this->invoker->invoke($nextCallable, ...$params);
             $nextCallable = $stack->isEmpty() ? null : $stack->extract();

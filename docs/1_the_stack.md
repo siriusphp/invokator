@@ -31,28 +31,13 @@ $stack->add('Str::toUpper');
 
 // add an object method to the stack,
 // object to be retrieved at runtime from the container
-// the callable also has a priority of 100
-$stack->add('SlackChannel@send', 100);
+// the callable also has a priority of -100
+$stack->add('SlackChannel@send', -100);
 
 // add an object method to the stack
 // with a specific priority to be executed
 // before the callable that was registered above 
-$stack->add([$logger, 'info'], 3);
-```
-
-Stacks have a factory method that let you replace the code above with
-
-```php
-use Sirius\StackRunner\Stack;
-
-$stack = new Stack();
-$stack->add('trim');
-$stack->add(function($str) {
-   return 'hello ' . $str;
-});
-$stack->add('Str::toUpper');
-$stack->add('SlackChannel@send', 3);
-$stack->add([$logger, 'info'], 3);
+$stack->add([$logger, 'info'], -3);
 ```
 
 #### Callable priority

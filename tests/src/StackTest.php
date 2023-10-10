@@ -15,12 +15,12 @@ class StackTest extends TestCase
         $stack->add('callable_6');
 
         $this->assertSame([
-            'callable_5',
-            'callable_6',
-            'callable_1',
-            'callable_2',
             'callable_3',
             'callable_4',
+            'callable_1',
+            'callable_2',
+            'callable_5',
+            'callable_6',
         ], $this->getCallablesFromStack($stack));
     }
 
@@ -35,12 +35,12 @@ class StackTest extends TestCase
         $stack->add('callable_6');
 
         $this->assertSame([
-            'callable_5',
-            'callable_6',
-            'callable_1',
-            'callable_2',
             'callable_3',
             'callable_4',
+            'callable_1',
+            'callable_2',
+            'callable_5',
+            'callable_6',
         ], $this->getCallablesFromStack(unserialize(serialize($stack))));
     }
 }

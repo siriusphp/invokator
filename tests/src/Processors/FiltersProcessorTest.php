@@ -14,8 +14,8 @@ class FiltersProcessorTest extends TestCase
         $processor->add('test', function ($name) {
             return '   hello ' . $name;
         }, 0, 1);
-        $processor->add('test', 'trim', 1, 1);
-        $processor->add('test', 'ucwords', 1, 2);
+        $processor->add('test', 'trim', 0, 1);
+        $processor->add('test', 'ucwords', 0, 2);
 
         $result = $processor->process('test', 'world');
 

@@ -51,5 +51,5 @@ $processor->process($stack, "  hello world  "); // returns `HELLO WORLD!!!`
 - [changelog](CHANGELOG.md)
 
 ## Todo
-- [] Implement resumable pipelines
-- [] Document other use cases
+- [ ] Implement resumable pipelines
+- [ ] Document other use cases
