@@ -16,10 +16,13 @@ RUN apt-get update && apt-get install -y \
     libzip-dev
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip xdebug
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
 RUN { \
-        echo "xdebug.mode=debug"; \
+        echo "xdebug.mode=coverage"; \
         echo "xdebug.start_with_request=yes"; \
         echo "xdebug.client_host=host.docker.internal"; \
         echo "xdebug.client_port=9000"; \
