@@ -33,7 +33,7 @@ $processor->get('stack')
 $processor->process('stack', $param_1, $param_2, $param_3, $param_4);
 ```
 
-This modifier is used by the "actions processor" and the "filters processor"
+This modifier is used by the [actions processor](2_4_wordpress_actions.md) and the [filters processor](2_5_wordpress_filters.md)
 
 ## The "once" modifier
 
@@ -77,8 +77,9 @@ This modifier can be used when you have a callable that has a specific signature
 ```php
 use function Sirius\StackRunner\with_arguments;
 use function Sirius\StackRunner\ref;
+use function Sirius\StackRunner\arg;
 $processor->get('stack')
-        ->add(with_arguments('Service@method', [ref(0), 'value', ref('SomeClass'), ref(1)]);
+        ->add(with_arguments('Service@method', [arg(0), 'value', ref('SomeClass'), arg(1)]);
 
 $processor->process('stack', $param_1, $param_2);
 

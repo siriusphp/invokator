@@ -12,3 +12,5 @@ php-cs-fixer.phar
 phpcbf.phar
 phpcs.phar
 phpmd.phar
+/.php-cs-fixer.cache
+/tests/.phpunit.result.cache
