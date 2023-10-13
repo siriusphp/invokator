@@ -18,7 +18,7 @@ gacode: UA-535999-18
 
 projectName: Sirius\Invokator
 title: Sirius\Invokator
-subTitle: Implementation of various stack patterns (pipelines, middleware, events)
+subTitle: Implementation of various callables patterns (pipelines, middleware, events)
 
 # The left menu bar
 menu:
@@ -38,14 +38,14 @@ menu:
                 getting_started:
                     text: Introduction
                     relativeUrl:
-                stack:
-                    text: The callable stack
+                callable_collection:
+                    text: The callable collection
                     relativeUrl: 1_callable_collection.html
                 callable_processors:
-                    text: The stack processors
+                    text: The callable processors
                     relativeUrl: 2_callable_processors.html
-                simple_stacks:
-                    text: "- Simple stacks"
+                simple_callection:
+                    text: "- Simple collection"
                     relativeUrl: 2_1_simple_collection.html
                 pipelines:
                     text: "- Pipelines"
@@ -62,7 +62,7 @@ menu:
                 filters:
                     text: "- Filters a la Wordpress"
                     relativeUrl: 2_5_wordpress_filters.html
-                custom_stacks:
+                custom_processor:
                     text: "- Custom processors"
                     relativeUrl: 2_6_custom_processors.html
                 modifiers:

@@ -49,7 +49,7 @@ $dispatcher->dispatch(new EventWithName());
 
 ### Stoppable events
 
-If you want some events to be able to stop the execution of the rest of the callables in the stack you can add the `Stoppable` trait to your event classes
+If you want some events to be able to stop the execution of the rest of the callables in the collection you can add the `Stoppable` trait to your event classes
 
 ```php
 use Sirius\Invokator\Event\Stoppable;

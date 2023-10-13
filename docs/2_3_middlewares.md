@@ -6,7 +6,7 @@ title: Middlewares
 
 This processor has the following characteristics:
 1. All the parameters are passed down to each of the callables as which means all the callables should have the same signature (although this restriction can be by-passed with **modifiers**)
-2. The second to the last callables receive a `$next` as their last parameter which is a callable that continues the calls from the stack
+2. The second to the last callables receive a `$next` as their last parameter which is a callable that continues the calls from the collection
 3. Each callable may call `$next` or not
 
 #### Use case

@@ -8,7 +8,7 @@ This processor has the following characteristics:
 1. All the parameters are passed down to each of the callables. This means all the callables should have the same signature (although this restriction can be by-passed with **modifiers**)
 2. The values returned by the callables are ignored
 
-#### Use case: Reporting/logging stack
+#### Use case: Reporting/logging
 
 ```php
 use Sirius\Invokator\Invoker;

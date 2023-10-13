@@ -26,8 +26,8 @@ $processor->process('the_title', $postTitle, $postID);
 **Attention!** The processor's `get()` and `add()` method return the Stack object, so you can't chain callables with arguments limit. For example the code below doesn't work as you might expect
 
 ```php
-$processor->add('the_title', 'add_category_name', 0, 2) // this returns the stack
-        ->add('add_site_name', 0, 2) // this won't place a limit on the arguments for the 'add_site_name' function
+$processor->add('the_title', 'add_category_name', 0, 2) // this returns the collection
+          ->add('add_site_name', 0, 2) // this won't place a limit on the arguments for the 'add_site_name' function
 ```
 
 [Next: Custom callable processors](2_6_custom_processors.md)

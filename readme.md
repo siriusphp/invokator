@@ -47,7 +47,7 @@ $processor->process($stack, "  hello world  "); // returns `HELLO WORLD!!!`
 
 ## Where to next?
 
-- [documentation](https://sirius.ro/php/sirius/stack_runner/)
+- [documentation](https://sirius.ro/php/sirius/invokator/)
 - [changelog](CHANGELOG.md)
 
 ## Todo

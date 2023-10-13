@@ -4,7 +4,7 @@ title: Custom callable processors
 
 # Custom callables processor
 
-You can easily build your own custom processor by extending the `SimpleCallablesProcessor` or starting from scratch as the API for a stack processor is very simple. 
+You can easily build your own custom processor by extending the `SimpleCallablesProcessor` or starting from scratch as the API for a callables processor is very simple. 
 
 If you extend the `SimpleCallablesProcessor` you only need to implement the `processCollection()` method.
 

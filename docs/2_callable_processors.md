@@ -5,10 +5,10 @@ title: What are callable processors in Sirius\Invokator?
 # The callable processors
 
 Callable processors are objects that have 3 objectives:
-1. To act as a registry for stacks via `$processor->get('stack_identifier')`
-2. To simplify adding callbacks to stacks via `$processor->add('stack_identifier', $callable, $priority)` which is syntactic sugar for `$processor->get('stack_identifier')->add($callable, $priority)`
-3. To process stacks stored in the registry via `$processor->process('stack_identifier', $param_1, $param_2)`
-4. To process stacks constructed separately via `$processor->processCollection($previouslyConstructedStack, $param_1, $param_2)` 
+1. To act as a registry for collections via `$processor->get('callables_identifier')`
+2. To simplify adding callbacks to collections via `$processor->add('callables_identifier', $callable, $priority)` which is syntactic sugar for `$processor->get('callables_identifier')->add($callable, $priority)`
+3. To process collections stored in the registry via `$processor->process('callables_identifier', $param_1, $param_2)`
+4. To process callable collections constructed separately via `$processor->processCollection($previouslyConstructedCollection, $param_1, $param_2)` 
 
 The processors depend on the [invoker](3_the_invoker.md) to actually execute the callbacks.
 
