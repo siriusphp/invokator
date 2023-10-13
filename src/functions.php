@@ -6,6 +6,7 @@ namespace Sirius\Invokator;
 
 use Sirius\Invokator\Modifiers\LimitArguments;
 use Sirius\Invokator\Modifiers\Once;
+use Sirius\Invokator\Modifiers\ResolveArguments;
 use Sirius\Invokator\Modifiers\WithArguments;
 use Sirius\Invokator\Modifiers\Wrap;
 
@@ -22,6 +23,17 @@ if (! function_exists('Sirius\Invokator\arg')) {
         return new ArgumentReference($ref);
     }
 }
+
+if (! function_exists('Sirius\Invokator\resolve')) {
+    /**
+     * @param array<string, mixed> $params
+     */
+    function resolve(mixed $callable, array $params = []): ResolveArguments
+    {
+        return new ResolveArguments($callable, $params);
+    }
+}
+
 if (! function_exists('Sirius\Invokator\result_of')) {
     /**
      * @param array<mixed> $params

@@ -86,6 +86,23 @@ $processor->process('collection', $param_1, $param_2);
 
 // This is the same as calling Service@method($param_1, 'value', $container->get('SomeClass'), $param_2)
 ```
+## The "resolve" modifier
+
+Some callables might have dependencies on other services, and you might not know them while you call them or you might not want to be forced to use `ref()` them. In this case you can use the `resolve()` modifier.
+
+The `resolve()` modifier works with the `arg()` and `ref()` utilities.
+
+```php
+use function Sirius\Invokator\resolve;
+use function Sirius\Invokator\arg;
+
+// Service@method($param_1, SomeClass $param_2, $param_3)
+$processor->get('collection')
+          ->add(resolve('Service@method', ['param_1' => arg(0), 'param_3' => 20]);
+
+$processor->process('collection', 10);
+// $param_2 will be a
+```
 
 You will learn about the `arg()` and `ref()` functions on the [invoker](4_the_invoker.md) page
 

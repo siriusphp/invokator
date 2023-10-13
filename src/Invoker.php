@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator;
 
+use InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use ReflectionFunction;
+use ReflectionMethod;
+use ReflectionNamedType;
+use ReflectionParameter;
 
 class Invoker
 {
@@ -18,14 +23,14 @@ class Invoker
     }
 
     /**
-     * @param array<mixed> $params
+     * @param array<int, mixed> $params
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     public function invoke(mixed $callable, ...$params): mixed
     {
-        $args = $this->resolveArguments($params);
+        $args = $this->computeArguments($params);
 
         $callable = $this->getActualCallable($callable);
 
@@ -35,6 +40,19 @@ class Invoker
 
         return $callable(...$args);
     }
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function invokeWithNamedArguments(mixed $callable, array $params): mixed
+    {
+        $callable = $this->getActualCallable($callable);
+        $args = $this->resolveArguments($callable, $params);
+
+        return $this->invoke($callable, ...$args);
+    }
 
     /**
      * @param array<mixed> $params
@@ -43,7 +61,7 @@ class Invoker
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    protected function resolveArguments(array $params): array
+    public function computeArguments(array $params): array
     {
         $values = [];
         foreach ($params as $p) {
@@ -58,6 +76,48 @@ class Invoker
         }
 
         return $values;
+    }
+
+    /**
+     * @param array<string, mixed> $args
+     *
+     * @return array<mixed>
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws \ReflectionException
+     */
+    protected function resolveArguments(mixed $callable, array $args): array
+    {
+        if (is_string($callable) && is_callable($callable)) {
+            $reflection = new ReflectionFunction($callable);
+        } elseif (is_array($callable) && is_callable($callable)) {
+            $reflection = new ReflectionMethod($callable[0], $callable[1]);
+        } else {
+            throw new InvalidArgumentException('Invalid callable provided');
+        }
+
+        $resolvedArgs = [];
+
+        /** @var ReflectionParameter $param */
+        foreach ($reflection->getParameters() as $param) {
+            $paramName = $param->getName();
+            /** @var ?ReflectionNamedType $paramType */
+            $paramType = $param->getType();
+            if ($paramType && !$paramType->isBuiltin()) {
+                if ($this->container->has($paramType->getName())) {
+                    $resolvedArgs[] = $this->container->get($paramType->getName());
+                } else {
+                    throw new InvalidArgumentException("Cannot resolve parameter: $paramName");
+                }
+            } else if (isset($args[$paramName]) || $param->getDefaultValue()) {
+                // Builtin types, such as int or string, do not need resolution.
+                $resolvedArgs[] = $args[$paramName] ?? $param->getDefaultValue();
+            } else {
+                throw new InvalidArgumentException("Cannot resolve parameter: $paramName");
+            }
+        }
+
+        return $resolvedArgs;
     }
 
     /**
