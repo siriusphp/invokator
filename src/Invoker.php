@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;

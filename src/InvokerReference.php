@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
 class InvokerReference
 {

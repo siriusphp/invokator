@@ -1,6 +1,6 @@
 <?php
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Psr\Container\ContainerInterface;
@@ -55,7 +55,7 @@ class TestCase extends PHPUnitTestCase
         return new Invoker($this->getContainer());
     }
 
-    protected function getCallablesFromStack(Stack $stack)
+    protected function getCallablesFromStack(CallableCollection $stack)
     {
         $callables = [];
         do {

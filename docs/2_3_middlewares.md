@@ -12,18 +12,18 @@ This processor has the following characteristics:
 #### Use case
 
 ```php
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Processors\MiddlewareProcessor;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\Processors\MiddlewareProcessor;
 
 $invoker = new Invoker($psr11Container);
 $processor = new MiddlewareProcessor($invoker);
 
 $processor->get('dispatcher')
-        ->add('CsrfCheckMiddleware') 
-        ->add('TrimStringsMiddleware')
-        ->add('AuthMiddleware')
-        ->add('CacheMiddleware')
-        ->add('RouterMiddleware')
+          ->add('CsrfCheckMiddleware') 
+          ->add('TrimStringsMiddleware')
+          ->add('AuthMiddleware')
+          ->add('CacheMiddleware')
+          ->add('RouterMiddleware');
 
 $processor->process('dispatcher', new HttpRequest);
 ```

@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Event;
+namespace Sirius\Invokator\Event;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Sirius\StackRunner\Stack;
-use function Sirius\StackRunner\once;
+use Sirius\Invokator\CallableCollection;
+use function Sirius\Invokator\once;
 
 class ListenerProvider implements ListenerProviderInterface, ListenerSubscriber
 {
     /**
-     * @var array<string, Stack|iterable>
+     * @var array<string, CallableCollection|iterable>
      */
     protected array $registry = []; // @phpstan-ignore-line
 
     /**
-     * @return iterable|Stack
+     * @return iterable|CallableCollection
      */
     public function getListenersForEvent(object $event): iterable // @phpstan-ignore-line
     {
@@ -25,13 +25,13 @@ class ListenerProvider implements ListenerProviderInterface, ListenerSubscriber
             $eventName = $event->getEventName();
         }
 
-        return $this->registry[$eventName] ?? new Stack();
+        return $this->registry[$eventName] ?? new CallableCollection();
     }
 
     public function subscribeTo(string $eventName, mixed $callable, int $priority = 0): void
     {
-        /** @var Stack $stack */
-        $stack = $this->registry[$eventName] ?? new Stack();
+        /** @var CallableCollection $stack */
+        $stack = $this->registry[$eventName] ?? new CallableCollection();
 
         $stack->add($callable, $priority);
 
@@ -40,8 +40,8 @@ class ListenerProvider implements ListenerProviderInterface, ListenerSubscriber
 
     public function subscribeOnceTo(string $eventName, mixed $callable, int $priority = 0): void
     {
-        /** @var Stack $stack */
-        $stack = $this->registry[$eventName] ?? new Stack();
+        /** @var CallableCollection $stack */
+        $stack = $this->registry[$eventName] ?? new CallableCollection();
 
         $stack->add(once($callable), $priority);
 

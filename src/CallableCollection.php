@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
-class Stack extends \SplPriorityQueue
+class CallableCollection extends \SplPriorityQueue
 {
     protected int $index = 0;
 

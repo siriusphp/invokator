@@ -1,12 +1,12 @@
 <?php
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
 class StackTest extends TestCase
 {
     function test_priorities_are_respected()
     {
-        $stack = new Stack();
+        $stack = new CallableCollection();
         $stack->add('callable_1', 10);
         $stack->add('callable_2', 10);
         $stack->add('callable_3', 100);
@@ -26,7 +26,7 @@ class StackTest extends TestCase
 
     public function test_serialization_of_simple_stack()
     {
-        $stack = new Stack();
+        $stack = new CallableCollection();
         $stack->add('callable_1', 10);
         $stack->add('callable_2', 10);
         $stack->add('callable_3', 100);

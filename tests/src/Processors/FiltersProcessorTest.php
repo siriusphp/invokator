@@ -1,9 +1,9 @@
 <?php
 
-namespace Sirius\StackRunner\Processors;
+namespace Sirius\Invokator\Processors;
 
-use Sirius\StackRunner\TestCase;
-use Sirius\StackRunner\Utilities\SimpleCallables;
+use Sirius\Invokator\TestCase;
+use Sirius\Invokator\Utilities\SimpleCallables;
 
 class FiltersProcessorTest extends TestCase
 {

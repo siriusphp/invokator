@@ -1,9 +1,9 @@
 <?php
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
-use Sirius\StackRunner\Processors\SimpleStackProcessor;
-use Sirius\StackRunner\Utilities\SimpleCallables;
+use Sirius\Invokator\Processors\SimpleCallablesProcessor;
+use Sirius\Invokator\Utilities\SimpleCallables;
 
 class WrapTest extends TestCase
 {
@@ -18,7 +18,7 @@ class WrapTest extends TestCase
     public function test_modifier()
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
-        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor = new SimpleCallablesProcessor($this->getInvoker());
         $processor->add('test', wrap(function ($param_1, $param_2) {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         }, function ($next) {

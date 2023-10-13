@@ -1,10 +1,10 @@
 <?php
 
-namespace Sirius\StackRunner\Modifiers;
+namespace Sirius\Invokator\Modifiers;
 
-use Sirius\StackRunner\Processors\SimpleStackProcessor;
-use Sirius\StackRunner\TestCase;
-use function Sirius\StackRunner\once;
+use Sirius\Invokator\Processors\SimpleCallablesProcessor;
+use Sirius\Invokator\TestCase;
+use function Sirius\Invokator\once;
 
 class OnceTest extends TestCase
 {
@@ -18,7 +18,7 @@ class OnceTest extends TestCase
 
     public function test_modifier()
     {
-        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor = new SimpleCallablesProcessor($this->getInvoker());
         $processor->add('test', once(function ($param_1, $param_2) {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         }));

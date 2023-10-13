@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Processors;
+namespace Sirius\Invokator\Processors;
 
-use Sirius\StackRunner\InvalidCallableException;
-use Sirius\StackRunner\Stack;
+use Sirius\Invokator\InvalidCallableException;
+use Sirius\Invokator\CallableCollection;
 
-class MiddlewareProcessor extends SimpleStackProcessor
+class MiddlewareProcessor extends SimpleCallablesProcessor
 {
     /**
      * @param array<mixed> $params
@@ -16,7 +16,7 @@ class MiddlewareProcessor extends SimpleStackProcessor
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws InvalidCallableException
      */
-    public function processStack(Stack $stack, ...$params): mixed
+    public function processCollection(CallableCollection $stack, ...$params): mixed
     {
         $result       = null;
         $nextCallable = $stack->extract();
@@ -25,7 +25,7 @@ class MiddlewareProcessor extends SimpleStackProcessor
             if ($stack->isEmpty()) {
                 $response = $this->invoker->invoke($nextCallable, ...$params);
             } else {
-                $next          = fn ($result) => $this->processStack($stack, ...$params);
+                $next          = fn ($result) => $this->processCollection($stack, ...$params);
                 $paramsForNext = [...$params, $next];
                 $response      = $this->invoker->invoke($nextCallable, ...$paramsForNext);
             }

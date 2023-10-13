@@ -1,13 +1,13 @@
 <?php
 
-namespace Sirius\StackRunner\Modifiers;
+namespace Sirius\Invokator\Modifiers;
 
-use Sirius\StackRunner\Processors\SimpleStackProcessor;
-use Sirius\StackRunner\TestCase;
-use function Sirius\StackRunner\ref;
-use function Sirius\StackRunner\arg;
-use function Sirius\StackRunner\result_of;
-use function Sirius\StackRunner\with_arguments;
+use Sirius\Invokator\Processors\SimpleCallablesProcessor;
+use Sirius\Invokator\TestCase;
+use function Sirius\Invokator\ref;
+use function Sirius\Invokator\arg;
+use function Sirius\Invokator\result_of;
+use function Sirius\Invokator\with_arguments;
 
 class WithArgumentsTest extends TestCase
 {
@@ -22,7 +22,7 @@ class WithArgumentsTest extends TestCase
     public function test_modifier_with_refs()
     {
         $this->getContainer()->register('test_param', 'C');
-        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor = new SimpleCallablesProcessor($this->getInvoker());
         $processor->add('test', with_arguments(function ($param_1, $param_2, $param_3, $param_4) {
             static::$results[] = sprintf("anonymous function(%s, %s, %s, %s)", $param_1, $param_2, $param_3, $param_4);
         }, [arg(1), arg(0), ref('test_param'), 'D']));
@@ -37,7 +37,7 @@ class WithArgumentsTest extends TestCase
     public function test_modifier_with_invoker_result()
     {
         $this->getContainer()->register('test_param', 'C');
-        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor = new SimpleCallablesProcessor($this->getInvoker());
         $processor->add('test', with_arguments(function ($param_1, $param_2, $param_3) {
             static::$results[] = sprintf("anonymous function(%s, %s, %s)", $param_1, $param_2, $param_3);
         }, [result_of('trim', ['   C   ']), arg(1), arg(0)]));

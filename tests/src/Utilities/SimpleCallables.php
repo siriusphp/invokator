@@ -1,9 +1,9 @@
 <?php
 
-namespace Sirius\StackRunner\Utilities;
+namespace Sirius\Invokator\Utilities;
 
-use Sirius\StackRunner\SimpleStackProcessorTest;
-use Sirius\StackRunner\TestCase;
+use Sirius\Invokator\SimpleStackProcessorTest;
+use Sirius\Invokator\TestCase;
 
 class SimpleCallables
 {

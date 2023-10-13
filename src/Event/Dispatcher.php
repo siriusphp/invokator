@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Event;
+namespace Sirius\Invokator\Event;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Stack;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\CallableCollection;
 
 class Dispatcher implements EventDispatcherInterface
 {
@@ -19,7 +19,7 @@ class Dispatcher implements EventDispatcherInterface
 
     public function dispatch(object $event): object
     {
-        /** @var Stack $stack */
+        /** @var CallableCollection $stack */
         $stack = $this->registry->getListenersForEvent($event);
 
         /** @var mixed $callable */

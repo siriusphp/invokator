@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
-interface StackRunnerInterface
+interface InvokatorInterface
 {
     /**
      * @param array<mixed> $params
@@ -14,5 +14,5 @@ interface StackRunnerInterface
     /**
      * @param array<mixed> $params
      */
-    public function processStack(Stack $stack, ...$params): mixed;
+    public function processCollection(CallableCollection $stack, ...$params): mixed;
 }

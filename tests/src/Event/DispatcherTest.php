@@ -1,8 +1,8 @@
 <?php
 
-namespace Sirius\StackRunner\Event;
+namespace Sirius\Invokator\Event;
 
-use Sirius\StackRunner\TestCase;
+use Sirius\Invokator\TestCase;
 
 require_once __DIR__ . '/EventWithName.php';
 require_once __DIR__ . '/EventWithoutName.php';

@@ -1,5 +1,5 @@
 ---
-title: What is the callable invoker in Sirius\StackRunner?
+title: What is the callable invoker in Sirius\Invokator?
 ---
 
 # The callable invoker
@@ -12,7 +12,7 @@ On its own, PHP recognizes a few callables based on how they are referenced:
 4. an anonymous function, like `function($number) { return $number + 5}`
 5. an instance of an invokable class (i.e. a class that has an `__invoke` method)
 
-However, in the context of modern development these options are not enough. For this reason the `Sirius\StackRunner` library comes with an `Invoker` that can handle:
+However, in the context of modern development these options are not enough. For this reason the `Sirius\Invokator` library comes with an `Invoker` that can handle:
 
 1. Callables in the format of `SomeClass@someMethod` 
 2. Callables in the format of `SomeClass` with the condition that the class is invokable
@@ -29,18 +29,17 @@ When executing a callback, the invoker object, with go over the arguments passed
 This is for when you want to pass a parameter that is actually a reference to an item in the container. It is useful if you don't want to retrieve the item from the container until it is actually 
   needed. 
 
-Such an instance is created using the `Sirius\StackRunner\ref($identifier)` function.
+Such an instance is created using the `Sirius\Invokator\ref($identifier)` function.
 
 ##### 2. instances of the `InvokerResult` class. 
-This for when you want to use as an argument for a callable the result of a computationally expensive function. Such an instance is created using the `Sirius\StackRunner\result_of($callable, [$param_1, 
-  $param_2])` function
+This for when you want to use as an argument the result of a computationally expensive function. In this case you would want to execute that function only when it's needed
+
+Such an instance is created using the `Sirius\Invokator\result_of($callable, [$param_1, $param_2])` function
 
 ##### 3. instances of the `ArgumentReference` class. 
-This for when you want to use as an argument in a different position than the position that argument was passed on by the processor. Such an instance is created using the `Sirius\StackRunner\arg(2)` function. 
+This for when you want to use as an argument in a different position than the position that argument was passed on by the processor. 
+
+Such an instance is created using the `Sirius\Invokator\arg(2)` function. 
 
 For an example, check the documentation for the ["with arguments" modifier](3_callable_modifiers.md)
 
-## Extending the invoker
-
-
-[Next: The simple stack runner](3_simple_runner.md)

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Processors;
+namespace Sirius\Invokator\Processors;
 
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Stack;
-use Sirius\StackRunner\StackRegistryInterface;
-use Sirius\StackRunner\StackRunnerInterface;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\CallableCollection;
+use Sirius\Invokator\CallablesRegistryInterface;
+use Sirius\Invokator\InvokatorInterface;
 
-use function Sirius\StackRunner\limit_arguments;
+use function Sirius\Invokator\limit_arguments;
 
-class FiltersProcessor implements StackRegistryInterface, StackRunnerInterface
+class FiltersProcessor implements CallablesRegistryInterface, InvokatorInterface
 {
     /**
-     * @var array<Stack>
+     * @var array<CallableCollection>
      */
     protected $registry = [];
 
@@ -22,7 +22,7 @@ class FiltersProcessor implements StackRegistryInterface, StackRunnerInterface
     {
     }
 
-    public function get(string $name): Stack
+    public function get(string $name): CallableCollection
     {
         if (! isset($this->registry[$name])) {
             $this->registry[$name] = $this->newStack();
@@ -31,17 +31,17 @@ class FiltersProcessor implements StackRegistryInterface, StackRunnerInterface
         return $this->registry[$name];
     }
 
-    public function add(string $name, mixed $callable, int $priority = 0, int $argumentsLimit = 1): Stack
+    public function add(string $name, mixed $callable, int $priority = 0, int $argumentsLimit = 1): CallableCollection
     {
         return $this->get($name)->add(limit_arguments($callable, $argumentsLimit), $priority);
     }
 
-    protected function newStack(): Stack
+    protected function newStack(): CallableCollection
     {
-        return new Stack();
+        return new CallableCollection();
     }
 
-    protected function getCopy(string $name): Stack
+    protected function getCopy(string $name): CallableCollection
     {
         return clone($this->get($name));
     }
@@ -51,13 +51,13 @@ class FiltersProcessor implements StackRegistryInterface, StackRunnerInterface
      */
     public function process(string $name, ...$params): mixed
     {
-        return $this->processStack($this->getCopy($name), ...$params);
+        return $this->processCollection($this->getCopy($name), ...$params);
     }
 
     /**
      * @param array<mixed> $params
      */
-    public function processStack(Stack $stack, ...$params): mixed
+    public function processCollection(CallableCollection $stack, ...$params): mixed
     {
         $result       = null;
         $nextCallable = $stack->extract();

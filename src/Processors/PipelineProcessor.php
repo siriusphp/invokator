@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Processors;
+namespace Sirius\Invokator\Processors;
 
-use Sirius\StackRunner\DelayedResult;
-use Sirius\StackRunner\PipelinePromise;
-use Sirius\StackRunner\Stack;
+use Sirius\Invokator\DelayedResult;
+use Sirius\Invokator\PipelinePromise;
+use Sirius\Invokator\CallableCollection;
 
-class PipelineProcessor extends SimpleStackProcessor
+class PipelineProcessor extends SimpleCallablesProcessor
 {
     /**
      * @param array<mixed> $params
      */
 
-    public function processStack(Stack $stack, ...$params): mixed
+    public function processCollection(CallableCollection $stack, ...$params): mixed
     {
         $result       = null;
         $nextCallable = $stack->extract();
@@ -36,7 +36,7 @@ class PipelineProcessor extends SimpleStackProcessor
     /**
      * @param array<mixed> $params
      */
-    public function resumeStack(Stack $remainingStack, mixed $previousValue, ...$params): mixed
+    public function resumeStack(CallableCollection $remainingStack, mixed $previousValue, ...$params): mixed
     {
         return null;
     }

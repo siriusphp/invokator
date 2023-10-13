@@ -1,16 +1,16 @@
 <?php
 
-namespace Sirius\StackRunner\Processors;
+namespace Sirius\Invokator\Processors;
 
-use Sirius\StackRunner\TestCase;
-use Sirius\StackRunner\Utilities\SimpleCallables;
+use Sirius\Invokator\TestCase;
+use Sirius\Invokator\Utilities\SimpleCallables;
 
 class SimpleStackProcessorTest extends TestCase
 {
     public function test_simple_stack_processor()
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
-        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor = new SimpleCallablesProcessor($this->getInvoker());
         $processor->add('test', function ($param_1, $param_2) {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         });
@@ -29,7 +29,7 @@ class SimpleStackProcessorTest extends TestCase
     public function test_execution_priority()
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
-        $processor = new SimpleStackProcessor($this->getInvoker());
+        $processor = new SimpleCallablesProcessor($this->getInvoker());
         $processor->add('test', function ($param_1, $param_2) {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         });

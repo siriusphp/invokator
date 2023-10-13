@@ -1,6 +1,6 @@
 <?php
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
 class InvalidCallableException extends \InvalidArgumentException
 {

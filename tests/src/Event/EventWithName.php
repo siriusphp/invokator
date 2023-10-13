@@ -1,6 +1,6 @@
 <?php
 
-namespace Sirius\StackRunner\Event;
+namespace Sirius\Invokator\Event;
 
 class EventWithName implements HasEventName {
 

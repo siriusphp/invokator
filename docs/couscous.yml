@@ -12,12 +12,12 @@ exclude:
 
 # Base URL of the published website (no "/" at the end!)
 # You are advised to set and use this variable to write your links in the HTML layouts
-baseUrl: https://www.sirius.ro/php/sirius/stack_runner
+baseUrl: https://www.sirius.ro/php/sirius/invokator
 paypal: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SGXDKNJCXFPJU
 gacode: UA-535999-18
 
-projectName: Sirius\StackRunner
-title: Sirius\StackRunner
+projectName: Sirius\Invokator
+title: Sirius\Invokator
 subTitle: Implementation of various stack patterns (pipelines, middleware, events)
 
 # The left menu bar
@@ -40,13 +40,13 @@ menu:
                     relativeUrl:
                 stack:
                     text: The callable stack
-                    relativeUrl: 1_the_stack.html
-                stack_processors:
+                    relativeUrl: 1_callable_collection.html
+                callable_processors:
                     text: The stack processors
-                    relativeUrl: 2_stack_processors.html
+                    relativeUrl: 2_callable_processors.html
                 simple_stacks:
                     text: "- Simple stacks"
-                    relativeUrl: 2_1_simple_stacks.html
+                    relativeUrl: 2_1_simple_collection.html
                 pipelines:
                     text: "- Pipelines"
                     relativeUrl: 2_2_pipelines.html

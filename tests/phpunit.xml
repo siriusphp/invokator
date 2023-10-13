@@ -23,7 +23,7 @@
     </coverage>
     <logging/>
     <testsuites>
-        <testsuite name="Sirius StackRunner Test Suite">
+        <testsuite name="Sirius Invokator Test Suite">
             <directory>./src/</directory>
         </testsuite>
     </testsuites>

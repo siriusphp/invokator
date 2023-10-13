@@ -1,13 +1,13 @@
 {
-    "name": "siriusphp/stack_runner",
-    "description": "Library that",
+    "name": "siriusphp/invokator",
+    "description": "Library that implements a unified way to execute a list of commands/callables that are used by various patterns: events, pipelines, middleware etc",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "callables",
         "events",
         "middleware",
-        "pipes",
+        "invoker",
         "pipelines"
     ],
     "authors": [
@@ -30,7 +30,7 @@
             "src/functions.php"
         ],
         "psr-4": {
-            "Sirius\\StackRunner\\": "src/"
+            "Sirius\\Invokator\\": "src/"
         }
     },
     "provide": {

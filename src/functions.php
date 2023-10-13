@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner;
+namespace Sirius\Invokator;
 
-use Sirius\StackRunner\Modifiers\LimitArguments;
-use Sirius\StackRunner\Modifiers\Once;
-use Sirius\StackRunner\Modifiers\WithArguments;
-use Sirius\StackRunner\Modifiers\Wrap;
+use Sirius\Invokator\Modifiers\LimitArguments;
+use Sirius\Invokator\Modifiers\Once;
+use Sirius\Invokator\Modifiers\WithArguments;
+use Sirius\Invokator\Modifiers\Wrap;
 
-if (! function_exists('Sirius\StackRunner\ref')) {
+if (! function_exists('Sirius\Invokator\ref')) {
     function ref(string $ref): InvokerReference
     {
         return new InvokerReference($ref);
     }
 }
 
-if (! function_exists('Sirius\StackRunner\arg')) {
+if (! function_exists('Sirius\Invokator\arg')) {
     function arg(int $ref): ArgumentReference
     {
         return new ArgumentReference($ref);
     }
 }
-if (! function_exists('Sirius\StackRunner\result_of')) {
+if (! function_exists('Sirius\Invokator\result_of')) {
     /**
      * @param array<mixed> $params
      */
@@ -32,7 +32,7 @@ if (! function_exists('Sirius\StackRunner\result_of')) {
     }
 }
 
-if (! function_exists('Sirius\StackRunner\with_arguments')) {
+if (! function_exists('Sirius\Invokator\with_arguments')) {
     /**
      * @param array<mixed> $arguments
      */
@@ -42,21 +42,21 @@ if (! function_exists('Sirius\StackRunner\with_arguments')) {
     }
 }
 
-if (! function_exists('Sirius\StackRunner\limit_arguments')) {
+if (! function_exists('Sirius\Invokator\limit_arguments')) {
     function limit_arguments(mixed $callable, int $argumentsLimit): LimitArguments
     {
         return new LimitArguments($callable, $argumentsLimit);
     }
 }
 
-if (! function_exists('Sirius\StackRunner\once')) {
+if (! function_exists('Sirius\Invokator\once')) {
     function once(mixed $callable): Once
     {
         return new Once($callable);
     }
 }
 
-if (! function_exists('Sirius\StackRunner\wrap')) {
+if (! function_exists('Sirius\Invokator\wrap')) {
     /**
      * @param callable $wrapperCallback
      */

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Modifiers;
+namespace Sirius\Invokator\Modifiers;
 
-use Sirius\StackRunner\ArgumentReference;
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\InvokerAwareInterface;
-use Sirius\StackRunner\InvokerReference;
+use Sirius\Invokator\ArgumentReference;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\InvokerAwareInterface;
+use Sirius\Invokator\InvokerReference;
 
 class WithArguments implements InvokerAwareInterface
 {

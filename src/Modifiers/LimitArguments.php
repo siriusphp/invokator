@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Modifiers;
+namespace Sirius\Invokator\Modifiers;
 
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\InvokerAwareInterface;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\InvokerAwareInterface;
 
 class LimitArguments implements InvokerAwareInterface
 {

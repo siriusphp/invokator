@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Sirius\StackRunner\Processors;
+namespace Sirius\Invokator\Processors;
 
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Stack;
-use Sirius\StackRunner\StackRegistryInterface;
-use Sirius\StackRunner\StackRunnerInterface;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\CallableCollection;
+use Sirius\Invokator\CallablesRegistryInterface;
+use Sirius\Invokator\InvokatorInterface;
 
-class SimpleStackProcessor implements StackRegistryInterface, StackRunnerInterface
+class SimpleCallablesProcessor implements CallablesRegistryInterface, InvokatorInterface
 {
     /**
-     * @var array<Stack>
+     * @var array<CallableCollection>
      */
     protected $registry = [];
 
@@ -20,7 +20,7 @@ class SimpleStackProcessor implements StackRegistryInterface, StackRunnerInterfa
     {
     }
 
-    public function get(string $name): Stack
+    public function get(string $name): CallableCollection
     {
         if (! isset($this->registry[$name])) {
             $this->registry[$name] = $this->newStack();
@@ -29,17 +29,17 @@ class SimpleStackProcessor implements StackRegistryInterface, StackRunnerInterfa
         return $this->registry[$name];
     }
 
-    public function add(string $name, mixed $callable, int $priority = 0): Stack
+    public function add(string $name, mixed $callable, int $priority = 0): CallableCollection
     {
         return $this->get($name)->add($callable, $priority);
     }
 
-    protected function newStack(): Stack
+    protected function newStack(): CallableCollection
     {
-        return new Stack();
+        return new CallableCollection();
     }
 
-    protected function getCopy(string $name): Stack
+    protected function getCopy(string $name): CallableCollection
     {
         return clone($this->get($name));
     }
@@ -49,13 +49,13 @@ class SimpleStackProcessor implements StackRegistryInterface, StackRunnerInterfa
      */
     public function process(string $name, ...$params): mixed
     {
-        return $this->processStack($this->getCopy($name), ...$params);
+        return $this->processCollection($this->getCopy($name), ...$params);
     }
 
     /**
      * @param array<mixed> $params
      */
-    public function processStack(Stack $stack, ...$params): mixed
+    public function processCollection(CallableCollection $stack, ...$params): mixed
     {
         $nextCallable = $stack->extract();
         while ($nextCallable !== null) {

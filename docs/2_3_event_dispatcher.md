@@ -4,12 +4,12 @@ title: PSR-14 Event dispatcher implementation
 
 # PSR-14 Event dispatcher implementation
 
-The `Sirius\StackRunner` library comes with an implementation of the [PSR-14 Event Dispatcher](https://www.php-fig.org/psr/psr-14/).
+The `Sirius\Invokator` library comes with an implementation of the [PSR-14 Event Dispatcher](https://www.php-fig.org/psr/psr-14/).
 
 ```php
-use Sirius\StackRunner\Invoker;
-use Sirius\StackRunner\Event\Dispatcher;
-use Sirius\StackRunner\Event\ListenerProvider;
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\Event\Dispatcher;
+use Sirius\Invokator\Event\ListenerProvider;
 
 $invoker = new Invoker($psr11Container);
 $listenerProvider = new ListenerProvider();
@@ -19,7 +19,7 @@ $dispatcher = new Dispatcher($listenerProvider, $invoker);
 $listenerProvider->subscribeTo(Event::class, 'some_callable', 0);
 $listenerProvider->subscribeOnceTo(Event::class, 'some_callable', 0);
 
-// if you use the Sirius\StackRunner\Event\ListenerProvider
+// if you use the Sirius\Invokator\Event\ListenerProvider
 // the same results as above can also be achieved with
 $dispatcher->subscribeTo(Event::class, 'some_callable', 0);
 $dispatcher->subscribeOnceTo(Event::class, 'some_callable', 0);
@@ -30,7 +30,7 @@ $dispatcher->subscribeOnceTo(Event::class, 'some_callable', 0);
 If you want to identify the events by something other than the class name you can make the event classes implement the `HasEventname` interface
 
 ```php
-use Sirius\StackRunner\Event\HasEventName;
+use Sirius\Invokator\Event\HasEventName;
 
 class EventWithName implements HasEventName {
     public function getEventName() : string{
@@ -52,7 +52,7 @@ $dispatcher->dispatch(new EventWithName());
 If you want some events to be able to stop the execution of the rest of the callables in the stack you can add the `Stoppable` trait to your event classes
 
 ```php
-use Sirius\StackRunner\Event\Stoppable;
+use Sirius\Invokator\Event\Stoppable;
 
 class StoppableEvent {
     use Stoppable;
