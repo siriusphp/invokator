@@ -69,5 +69,11 @@ menu:
                     text: Callable modifiers
                     relativeUrl: 3_callable_modifiers.html
                 invoker:
-                    text: The callable invokers
+                    text: The callable invoker
                     relativeUrl: 4_the_invoker.html
+        ideas:
+          name: Ideas
+          items:
+            auto_middleware:
+              text: Automatic middleware
+              relativeUrl: 6_automatic_middleware.html

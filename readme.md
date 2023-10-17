@@ -48,8 +48,4 @@ $processor->process($stack, "  hello world  "); // returns `HELLO WORLD!!!`
 ## Where to next?
 
 - [documentation](https://sirius.ro/php/sirius/invokator/)
-- [changelog](CHANGELOG.md)
-
-## Todo
-- [ ] Implement resumable pipelines
-- [ ] Document other use cases
+- [releases](https://github.com/siriusphp/invokator/releases)

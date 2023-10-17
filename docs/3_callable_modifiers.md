@@ -8,7 +8,7 @@ Callable modifiers are invokable classes that alter, at runtime, how the callabl
 
 Since a collection is composed of callables, the callable modifiers are actually callables as they implement the `__invoke()` method.
 
-The modifiers are composable which means you can wrap them one on top of another.
+The modifiers are **composable** which means you can wrap them one on top of another. 
 
 The `Sirius\Invokator` library comes with a bunch of modifiers that allow you to simplify how you compose your collection. The examples use function that create the actual modifiers.
 
