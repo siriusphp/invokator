@@ -56,6 +56,9 @@ menu:
                 event_dispatcher:
                     text: "- Event dispatcher"
                     relativeUrl: 2_3_event_dispatcher.html
+                command_bus:
+                    text: "- Command bus"
+                    relativeUrl: 2_3_command_bus.html
                 actions:
                     text: "- Actions a la Wordpress"
                     relativeUrl: 2_4_wordpress_actions.html

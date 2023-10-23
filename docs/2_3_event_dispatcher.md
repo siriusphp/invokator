@@ -69,4 +69,4 @@ $listenerProvider->subscribeTo(StoppableEvent::class, function(object $event) {
 $listenerProvider->subscribeTo(StoppableEvent::class, 'some_callable');
 ```
 
-[Next: Actions a la Wordpress](2_4_wordpress_actions.md)
+[Next: Command bus](2_3_command_bus.md)

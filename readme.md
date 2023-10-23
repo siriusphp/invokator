@@ -11,8 +11,9 @@ Sirius Invokator is a library that implements a unified way to execute a list of
 1. middlewares
 2. pipelines
 3. events
-4. actions a la Wordpress
-5. filters a la Wordpress
+4. command bus (with middleware)
+5. actions a la Wordpress
+6. filters a la Wordpress
 
 All of the above patterns have in common that they are actually a list of callables, and they differ in the way they are executed in different ways. 
 
@@ -22,6 +23,8 @@ callable having the option to terminate with a result or call the next callable 
 In the case of pipelines, the result of each callable is passed to the next callable and the last callable will return the result of the pipeline
 
 In the case of events, an `event` object is passed through each callable in the list and each callable is independent.
+
+In th case of the command buss, a `command` object is sent to be handled by only one callable.
 
 ## Elevator pitch
 
@@ -34,15 +37,14 @@ $container = app(); // your application DI container
 $invoker = new Invoker($container)
 $processor = new PipelineProcessor($invoker);
 
-$stack = new CallableCollection();
-$stack->add('trim');
-$stack->add('Str::toUppercase');
-$stack->add(fn($value) => {             // anonymous function
+$processor->add('pipeline_name', 'trim');
+$processor->add('pipeline_name', 'Str::toUppercase');
+$processor->add('pipeline_name', function($value) {             // anonymous function
     return $value . '!!!';
 });
-$stack->add('Logger@info');
+$processor->add('pipeline_name', 'Logger@info');
 
-$processor->process($stack, "  hello world  "); // returns `HELLO WORLD!!!`
+$processor->process('pipeline_name', "  hello world  "); // returns `HELLO WORLD!!!`
 ```
 
 ## Where to next?
