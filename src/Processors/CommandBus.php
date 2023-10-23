@@ -14,10 +14,11 @@ class CommandBus extends MiddlewareProcessor
      * to be defined before the middleware.
      * The handlers will be added to the middleware before being executed
      * @see handle()
+     * @var array<string, mixed> $handlers
      */
     protected array $handlers = [];
 
-    public function register(string $commandClass, mixed $commandHandler)
+    public function register(string $commandClass, mixed $commandHandler): void
     {
         $this->handlers[$commandClass] = $commandHandler;
     }
@@ -55,7 +56,7 @@ class CommandBus extends MiddlewareProcessor
         throw new \BadMethodCallException('You should not call the process() method on the command bus. Use handle() instead!');
     }
 
-    protected function getCallableForCommand(object $commandInstance)
+    protected function getCallableForCommand(object $commandInstance): mixed
     {
         $commandClass = get_class($commandInstance);
         $handler      = $this->handlers[$commandClass] ?? preg_replace('/(.+)Command$/', '$1Handler', $commandClass);
