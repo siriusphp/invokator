@@ -18,14 +18,14 @@ use Sirius\Invokator\Processors\MiddlewareProcessor;
 $invoker = new Invoker($psr11Container);
 $processor = new MiddlewareProcessor($invoker);
 
-$processor->get('dispatcher')
+$processor->get('http_handler')
           ->add('CsrfCheckMiddleware') 
           ->add('TrimStringsMiddleware')
           ->add('AuthMiddleware')
           ->add('CacheMiddleware')
           ->add('RouterMiddleware');
 
-$processor->process('dispatcher', new HttpRequest);
+$processor->process('http_handler', new HttpRequest);
 ```
 
 While this example is for HTTP middleware, it does not implement the [PSR-15 middleware specifications](https://www.php-fig.org/psr/psr-15/) as it does not enforce their respective signatures. It would be up to your app to enforce those restrictions

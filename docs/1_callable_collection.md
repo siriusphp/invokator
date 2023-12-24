@@ -6,10 +6,10 @@ title: What are callable collection in Sirius\Invokator?
 
 In the `Sirius\Invokator` items in the callable collections are organized by priority. By default, the priority is determined by the order the callables are added to the collection. The callables are executed in the order of their priority.
 
-A **callable** is something that can be executed directly or after being interpreted by the [invoker](2_the_invoker.md). For example the `Invoker` class that comes with this library can recognize and execute callables in the form of 
-`SomeClass@someMethod`
+A **callable** is something that can be executed directly or after being interpreted by the [invoker](4_the_invoker.md). 
+For example the `Invoker` class that comes with this library can recognize and execute callables in the form of `SomeClass@someMethod`
 
-Even though callable collections may have different purposes (middleware, events etc), a collection is defined in a single way. 
+Even though callable collections may have different purposes (middleware, events, etc.), a collection is defined in a single way. 
 
 Below it's an example for a collection designed to run as a pipeline that process a piece of text
 
@@ -63,9 +63,11 @@ $processor = new PipelineProcessor($invoker);
 $processor->processCollection($callables, ' world '); 
 
 // this will
-// 1. create string `HELLO WORLD`,
-// 2. Write an info message to the logger
-// 3. send it to a SlackChannel
+// 1. trim the parameter => `world`
+// 2. concatenate with "hello " => `hello world`
+// 3. make the string uppercase => `HELLO WORLD`,
+// 4. write the string as an info message to the logger
+// 5. send the string to a SlackChannel
 ```
 
 Each type of callables processor has its own quirks that you can learn on the next page.

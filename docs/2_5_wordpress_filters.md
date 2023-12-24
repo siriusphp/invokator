@@ -27,7 +27,7 @@ $processor->process('the_title', $postTitle, $postID);
 
 ```php
 $processor->add('the_title', 'add_category_name', 0, 2) // this returns the collection
-          ->add('add_site_name', 0, 2) // this won't place a limit on the arguments for the 'add_site_name' function
+          ->add('add_site_name', 0, 2) // this won't place a limit on the arguments for the 'add_site_name' function since the callables is returned by the first add() call
 ```
 
 [Next: Custom callable processors](2_6_custom_processors.md)

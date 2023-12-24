@@ -19,10 +19,13 @@ $dispatcher = new Dispatcher($listenerProvider, $invoker);
 $listenerProvider->subscribeTo(Event::class, 'some_callable', 0);
 $listenerProvider->subscribeOnceTo(Event::class, 'some_callable', 0);
 
-// if you use the Sirius\Invokator\Event\ListenerProvider
+// if you use the \Sirius\Invokator\Event\ListenerProvider
 // the same results as above can also be achieved with
 $dispatcher->subscribeTo(Event::class, 'some_callable', 0);
 $dispatcher->subscribeOnceTo(Event::class, 'some_callable', 0);
+
+// dispatch the event
+$dispatcher->dispatch(new Event());
 ```
 
 ### Named events

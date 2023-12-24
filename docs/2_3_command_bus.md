@@ -39,7 +39,7 @@ $bus->register(CreateProductCommand::class, 'SomeClass@execute');
 You can add middlewares at any point in time, before or after registering the command handlers.
 
 ```php
-$bus->addMiddleware(CreateProductCommand::class, 'CommandMiddleware@execute');
+$bus->addMiddleware(CreateProductCommand::class, 'CommandMiddleware@execute', 100 /* priority (optional) */);
 ```
 
 [Next: Actions a la Wordpress](2_4_wordpress_actions.md)

@@ -10,5 +10,6 @@ If you extend the `SimpleCallablesProcessor` you only need to implement the `pro
 
 Here are some ideas:
 1. pipelines where all the callbacks receive the same arguments and where the result of a callback becomes the first argument in the list. It would be similar to the "Filters processor" but without having to specify the limit for the arguments.
+2. HTTP middleware implementation of the PSR-15 standard. It would be similar to the "Middlewares processor" but with the restriction that all the callables should have the same signature.
 
 [Next: callable modifiers](3_callable_modifiers.md)
