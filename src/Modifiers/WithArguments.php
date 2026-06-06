@@ -7,7 +7,6 @@ namespace Sirius\Invokator\Modifiers;
 use Sirius\Invokator\ArgumentReference;
 use Sirius\Invokator\Invoker;
 use Sirius\Invokator\InvokerAwareInterface;
-use Sirius\Invokator\InvokerReference;
 
 class WithArguments implements InvokerAwareInterface
 {

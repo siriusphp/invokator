@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator\Modifiers;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Sirius\Invokator\ArgumentReference;
 use Sirius\Invokator\Invoker;
 use Sirius\Invokator\InvokerAwareInterface;
-use Sirius\Invokator\InvokerReference;
 
 class ResolveArguments implements InvokerAwareInterface
 {
@@ -30,8 +31,8 @@ class ResolveArguments implements InvokerAwareInterface
     /**
      * @param array<mixed> $params
      *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function __invoke(...$params): mixed
     {

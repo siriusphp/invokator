@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator\Processors;
 
-use Sirius\Invokator\Invoker;
 use Sirius\Invokator\CallableCollection;
 use Sirius\Invokator\CallablesRegistryInterface;
 use Sirius\Invokator\InvokatorInterface;
+use Sirius\Invokator\Invoker;
 
 use function Sirius\Invokator\limit_arguments;
 

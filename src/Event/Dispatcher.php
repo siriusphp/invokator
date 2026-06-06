@@ -7,8 +7,8 @@ namespace Sirius\Invokator\Event;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
-use Sirius\Invokator\Invoker;
 use Sirius\Invokator\CallableCollection;
+use Sirius\Invokator\Invoker;
 
 class Dispatcher implements EventDispatcherInterface
 {

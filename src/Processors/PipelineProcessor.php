@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator\Processors;
 
+use Sirius\Invokator\CallableCollection;
+use Sirius\Invokator\PipelinePromise;
 use Sirius\Invokator\SuggestedResume;
 use Sirius\Invokator\SuggestedRetry;
-use Sirius\Invokator\PipelinePromise;
-use Sirius\Invokator\CallableCollection;
 
 class PipelineProcessor extends SimpleCallablesProcessor
 {

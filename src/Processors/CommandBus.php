@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator\Processors;
 
-use Sirius\Invokator\InvalidCallableException;
-use Sirius\Invokator\CallableCollection;
-
 class CommandBus extends MiddlewareProcessor
 {
     /**

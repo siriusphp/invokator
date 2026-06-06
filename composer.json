@@ -64,7 +64,7 @@
             "php vendor/bin/phpstan analyse"
         ],
         "csfix": [
-            "php vendor/bin/php-cs-fixer fix --rules=@PSR12 src"
+            "php vendor/bin/php-cs-fixer fix"
         ],
         "test": [
             "php vendor/bin/phpunit -c tests/phpunit.xml"
