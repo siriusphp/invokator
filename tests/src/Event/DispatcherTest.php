@@ -10,16 +10,16 @@ require_once __DIR__ . '/StoppableEvent.php';
 
 class DispatcherTest extends TestCase
 {
-    public function test_subscribers_are_executed_in_order()
+    public function test_subscribers_are_executed_in_order(): void
     {
         $dispatcher = new Dispatcher(new ListenerProvider(), $this->getInvoker());
-        $dispatcher->subscribeTo('event_with_name', function (object $event) {
+        $dispatcher->subscribeTo('event_with_name', function (object $event): void {
             static::$results[] = 'subscriber 1';
         });
-        $dispatcher->subscribeTo('event_with_name', function (object $event) {
+        $dispatcher->subscribeTo('event_with_name', function (object $event): void {
             static::$results[] = 'subscriber 2';
         });
-        $dispatcher->subscribeTo('event_with_name', function (object $event) {
+        $dispatcher->subscribeTo('event_with_name', function (object $event): void {
             static::$results[] = 'subscriber 3';
         });
 
@@ -32,17 +32,17 @@ class DispatcherTest extends TestCase
         ], static::$results);
     }
 
-    public function test_stoppable_events()
+    public function test_stoppable_events(): void
     {
         $dispatcher = new Dispatcher(new ListenerProvider(), $this->getInvoker());
-        $dispatcher->subscribeTo(StoppableEvent::class, function (object $event) {
+        $dispatcher->subscribeTo(StoppableEvent::class, function (object $event): void {
             static::$results[] = 'subscriber 1';
         });
-        $dispatcher->subscribeTo(StoppableEvent::class, function (object $event) {
+        $dispatcher->subscribeTo(StoppableEvent::class, function (object $event): void {
             static::$results[] = 'subscriber 2';
             $event->stopPropagation();
         });
-        $dispatcher->subscribeTo(StoppableEvent::class, function (object $event) {
+        $dispatcher->subscribeTo(StoppableEvent::class, function (object $event): void {
             static::$results[] = 'subscriber 3';
         });
 
@@ -54,10 +54,10 @@ class DispatcherTest extends TestCase
         ], static::$results);
     }
 
-    public function test_once_subscribers()
+    public function test_once_subscribers(): void
     {
         $dispatcher = new Dispatcher(new ListenerProvider(), $this->getInvoker());
-        $dispatcher->subscribeOnceTo(EventWithoutName::class, function (object $event) {
+        $dispatcher->subscribeOnceTo(EventWithoutName::class, function (object $event): void {
             static::$results[] = 'once subscriber';
         });
 

@@ -7,11 +7,11 @@ use Sirius\Invokator\Utilities\SimpleCallables;
 
 class SimpleStackProcessorTest extends TestCase
 {
-    public function test_simple_stack_processor()
+    public function test_simple_stack_processor(): void
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', function ($param_1, $param_2) {
+        $processor->add('test', function (string $param_1, $param_2): void {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         });
         $processor->add('test', SimpleCallables::class . '::staticMethod');
@@ -26,11 +26,11 @@ class SimpleStackProcessorTest extends TestCase
         ], static::$results);
     }
 
-    public function test_execution_priority()
+    public function test_execution_priority(): void
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', function ($param_1, $param_2) {
+        $processor->add('test', function (string $param_1, $param_2): void {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         });
         $processor->add('test', SimpleCallables::class . '@method', 100);

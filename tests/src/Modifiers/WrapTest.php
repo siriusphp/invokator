@@ -15,11 +15,11 @@ class WrapTest extends TestCase
         static::$results = [];
     }
 
-    public function test_modifier()
+    public function test_modifier(): void
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', wrap(function ($param_1, $param_2) {
+        $processor->add('test', wrap(function (string $param_1, $param_2): void {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         }, function ($next) {
             static::$results[] = 'From wrapper function';

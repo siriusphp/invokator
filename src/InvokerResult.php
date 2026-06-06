@@ -7,10 +7,9 @@ namespace Sirius\Invokator;
 class InvokerResult
 {
     /**
-     * @param mixed $callable
      * @param array<mixed> $params
      */
-    public function __construct(public mixed $callable, public array $params = [])
+    public function __construct(public readonly mixed $callable, public readonly array $params = [])
     {
     }
 }

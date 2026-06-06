@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sirius\Invokator\CommandBus;
 
 use Sirius\Invokator\SimpleStackProcessorTest;

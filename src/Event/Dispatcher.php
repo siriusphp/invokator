@@ -12,7 +12,6 @@ use Sirius\Invokator\CallableCollection;
 
 class Dispatcher implements EventDispatcherInterface
 {
-
     public function __construct(public ListenerProviderInterface $registry, public Invoker $invoker)
     {
     }
@@ -36,9 +35,10 @@ class Dispatcher implements EventDispatcherInterface
 
     public function subscribeTo(string $eventName, mixed $callable, int $priority = 0): void
     {
-        if ( ! $this->registry instanceof ListenerSubscriber) {
-            throw new \LogicException(sprintf('Unable to subscribe listener because %s is not instace of %s',
-                get_class($this->registry),
+        if (! $this->registry instanceof ListenerSubscriber) {
+            throw new \LogicException(sprintf(
+                'Unable to subscribe listener because %s is not instace of %s',
+                $this->registry::class,
                 ListenerSubscriber::class
             ));
         }
@@ -48,9 +48,10 @@ class Dispatcher implements EventDispatcherInterface
 
     public function subscribeOnceTo(string $eventName, mixed $callable, int $priority = 0): void
     {
-        if ( ! $this->registry instanceof ListenerSubscriber) {
-            throw new \LogicException(sprintf('Unable to subscribe listener because %s is not instace of %s',
-                get_class($this->registry),
+        if (! $this->registry instanceof ListenerSubscriber) {
+            throw new \LogicException(sprintf(
+                'Unable to subscribe listener because %s is not instace of %s',
+                $this->registry::class,
                 ListenerSubscriber::class
             ));
         }

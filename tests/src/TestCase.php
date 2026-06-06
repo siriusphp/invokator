@@ -24,7 +24,7 @@ class Container implements ContainerInterface
         return isset($this->services[$id]);
     }
 
-    public function register(string $id, $implementation)
+    public function register(string $id, $implementation): void
     {
         $this->services[$id] = $implementation;
     }
@@ -50,12 +50,15 @@ class TestCase extends PHPUnitTestCase
         static::$results = [];
     }
 
-    protected function getInvoker()
+    protected function getInvoker(): \Sirius\Invokator\Invoker
     {
         return new Invoker($this->getContainer());
     }
 
-    protected function getCallablesFromStack(CallableCollection $stack)
+    /**
+     * @return mixed[]
+     */
+    protected function getCallablesFromStack(CallableCollection $stack): array
     {
         $callables = [];
         do {
@@ -68,7 +71,7 @@ class TestCase extends PHPUnitTestCase
         return $callables;
     }
 
-    protected function getContainer()
+    protected function getContainer(): \Sirius\Invokator\Container
     {
         if ( ! isset($this->container)) {
             $this->container = new Container();

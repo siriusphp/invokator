@@ -17,13 +17,15 @@
         }
     ],
     "require": {
-        "php": "^8.0|^8.1|^8.2",
+        "php": "^8.3",
         "psr/container": "^2.0",
         "psr/event-dispatcher": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6",
-        "phpstan/phpstan": "^1.10"
+        "phpunit/phpunit": "^12.0",
+        "phpstan/phpstan": "^2.0",
+        "rector/rector": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.34"
     },
     "autoload": {
         "files": [
@@ -41,10 +43,16 @@
             "php vendor/bin/phpstan analyse"
         ],
         "csfix": [
-            "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix  --standard=PSR-2 src"
+            "php vendor/bin/php-cs-fixer fix --rules=@PSR12 src"
         ],
         "test": [
             "php vendor/bin/phpunit -c tests/phpunit.xml"
+        ],
+        "rector": [
+            "php vendor/bin/rector process"
+        ],
+        "rector:dry": [
+            "php vendor/bin/rector process --dry-run"
         ]
     }
 }

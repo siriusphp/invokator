@@ -15,6 +15,7 @@ class PipelineProcessor extends SimpleCallablesProcessor
      * @param array<mixed> $params
      */
 
+    #[\Override]
     public function processCollection(CallableCollection $stack, ...$params): mixed
     {
         $result       = null;

@@ -16,7 +16,9 @@ class ResolveArguments implements InvokerAwareInterface
     /**
      * @param array<mixed> $arguments
      */
-    public function __construct(public mixed $callable, public array $arguments)
+    // $arguments is intentionally NOT readonly: __invoke() resolves ArgumentReferences
+    // into it in place.
+    public function __construct(public readonly mixed $callable, public array $arguments)
     {
     }
 
@@ -28,7 +30,6 @@ class ResolveArguments implements InvokerAwareInterface
     /**
      * @param array<mixed> $params
      *
-     * @return mixed
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */

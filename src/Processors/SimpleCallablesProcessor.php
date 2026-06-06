@@ -14,7 +14,7 @@ class SimpleCallablesProcessor implements CallablesRegistryInterface, InvokatorI
     /**
      * @var array<CallableCollection>
      */
-    protected $registry = [];
+    protected array $registry = [];
 
     public function __construct(public Invoker $invoker)
     {

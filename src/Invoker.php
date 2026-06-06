@@ -15,11 +15,8 @@ use ReflectionParameter;
 
 class Invoker
 {
-    private ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     /**
@@ -109,7 +106,7 @@ class Invoker
                 } else {
                     throw new InvalidArgumentException("Cannot resolve parameter: $paramName");
                 }
-            } else if (isset($args[$paramName]) || $param->getDefaultValue()) {
+            } elseif (isset($args[$paramName]) || $param->getDefaultValue()) {
                 // Builtin types, such as int or string, do not need resolution.
                 $resolvedArgs[] = $args[$paramName] ?? $param->getDefaultValue();
             } else {

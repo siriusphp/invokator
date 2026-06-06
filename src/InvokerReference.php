@@ -6,7 +6,7 @@ namespace Sirius\Invokator;
 
 class InvokerReference
 {
-    public function __construct(public string $reference)
+    public function __construct(public readonly string $reference)
     {
     }
 }

@@ -16,7 +16,7 @@ class FiltersProcessor implements CallablesRegistryInterface, InvokatorInterface
     /**
      * @var array<CallableCollection>
      */
-    protected $registry = [];
+    protected array $registry = [];
 
     public function __construct(public Invoker $invoker)
     {

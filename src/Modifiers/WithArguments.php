@@ -16,7 +16,7 @@ class WithArguments implements InvokerAwareInterface
     /**
      * @param array<mixed> $arguments
      */
-    public function __construct(public mixed $callable, public array $arguments)
+    public function __construct(public readonly mixed $callable, public readonly array $arguments)
     {
     }
 

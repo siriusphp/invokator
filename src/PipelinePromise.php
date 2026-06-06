@@ -9,7 +9,7 @@ class PipelinePromise
     /**
      * @param array<mixed> $params
      */
-    public function __construct(public mixed $value, public CallableCollection $remainingCallables, public array $params, public int $retryAfter)
+    public function __construct(public readonly mixed $value, public readonly CallableCollection $remainingCallables, public readonly array $params, public readonly int $retryAfter)
     {
     }
 }

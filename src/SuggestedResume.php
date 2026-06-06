@@ -6,7 +6,7 @@ namespace Sirius\Invokator;
 
 class SuggestedResume
 {
-    public function __construct(public mixed $value, public int $delay = 0)
+    public function __construct(public readonly mixed $value, public readonly int $delay = 0)
     {
     }
 }

@@ -16,6 +16,7 @@ class MiddlewareProcessor extends SimpleCallablesProcessor
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws InvalidCallableException
      */
+    #[\Override]
     public function processCollection(CallableCollection $stack, ...$params): mixed
     {
         $result       = null;
@@ -25,7 +26,7 @@ class MiddlewareProcessor extends SimpleCallablesProcessor
             if ($stack->isEmpty()) {
                 $response = $this->invoker->invoke($nextCallable, ...$params);
             } else {
-                $next          = fn ($result) => $this->processCollection($stack, ...$params);
+                $next          = fn ($result): mixed => $this->processCollection($stack, ...$params);
                 $paramsForNext = [...$params, $next];
                 $response      = $this->invoker->invoke($nextCallable, ...$paramsForNext);
             }

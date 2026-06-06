@@ -19,11 +19,11 @@ class WithArgumentsTest extends TestCase
         static::$results = [];
     }
 
-    public function test_modifier_with_refs()
+    public function test_modifier_with_refs(): void
     {
         $this->getContainer()->register('test_param', 'C');
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', with_arguments(function ($param_1, $param_2, $param_3, $param_4) {
+        $processor->add('test', with_arguments(function (string $param_1, $param_2, $param_3, $param_4): void {
             static::$results[] = sprintf("anonymous function(%s, %s, %s, %s)", $param_1, $param_2, $param_3, $param_4);
         }, [arg(1), arg(0), ref('test_param'), 'D']));
 
@@ -34,11 +34,11 @@ class WithArgumentsTest extends TestCase
         ], static::$results);
     }
 
-    public function test_modifier_with_invoker_result()
+    public function test_modifier_with_invoker_result(): void
     {
         $this->getContainer()->register('test_param', 'C');
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', with_arguments(function ($param_1, $param_2, $param_3) {
+        $processor->add('test', with_arguments(function (string $param_1, $param_2, $param_3): void {
             static::$results[] = sprintf("anonymous function(%s, %s, %s)", $param_1, $param_2, $param_3);
         }, [result_of('trim', ['   C   ']), arg(1), arg(0)]));
 

@@ -2,31 +2,27 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          bootstrap="phpunit_bootstrap.php"
          backupGlobals="false"
-         backupStaticAttributes="false"
          colors="true"
-         verbose="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
          stopOnError="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./../src</directory>
-        </include>
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.0/phpunit.xsd">
+    <coverage>
         <report>
             <clover outputFile="../build/logs/clover.xml"/>
             <html outputDirectory="../build/coverage/"/>
         </report>
     </coverage>
-    <logging/>
     <testsuites>
         <testsuite name="Sirius Invokator Test Suite">
             <directory>./src/</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">./../src</directory>
+        </include>
+    </source>
     <php>
         <env name="XDEBUG_MODE" value="coverage"/>
     </php>
