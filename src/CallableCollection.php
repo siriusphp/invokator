@@ -44,6 +44,9 @@ class CallableCollection extends \SplPriorityQueue
         return $sign * ($priority1[1] ?? 0) < $sign * ($priority2[1] ?? 0) ? 1 : -1;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function __serialize(): array
     {
         $data         = [];
