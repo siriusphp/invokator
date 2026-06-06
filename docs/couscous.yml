@@ -74,6 +74,12 @@ menu:
                 invoker:
                     text: The callable invoker
                     relativeUrl: 4_the_invoker.html
+        integrations:
+          name: Integrations
+          items:
+            laravel:
+              text: Laravel
+              relativeUrl: 7_laravel.html
         ideas:
           name: Ideas
           items:
