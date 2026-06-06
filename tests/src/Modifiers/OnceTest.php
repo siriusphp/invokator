@@ -16,10 +16,10 @@ class OnceTest extends TestCase
         static::$results = [];
     }
 
-    public function test_modifier()
+    public function test_modifier(): void
     {
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', once(function ($param_1, $param_2) {
+        $processor->add('test', once(function (string $param_1, $param_2): void {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         }));
 

@@ -7,19 +7,13 @@ use Sirius\Invokator\Utilities\SimpleCallables;
 
 class MiddlewareProcessorTest extends TestCase
 {
-    public function test_middleware_processor()
+    public function test_middleware_processor(): void
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
         $processor = new MiddlewareProcessor($this->getInvoker());
-        $processor->add('test', function ($name, $next = null) {
-            return ucwords($next($name));
-        });
-        $processor->add('test', function ($name, $next = null) {
-            return 'Hello ' . $next($name);
-        });
-        $processor->add('test', function ($name, $next = null) {
-            return $name;
-        });
+        $processor->add('test', fn($name, $next = null): string => ucwords((string) $next($name)));
+        $processor->add('test', fn($name, $next = null): string => 'Hello ' . $next($name));
+        $processor->add('test', fn($name, $next = null) => $name);
 
         $result = $processor->process('test', 'world');
 

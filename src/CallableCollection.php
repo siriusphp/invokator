@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator;
 
+/**
+ * @extends \SplPriorityQueue<array<int>, mixed>
+ */
 class CallableCollection extends \SplPriorityQueue
 {
     protected int $index = 0;
 
+    // NOT promoted on purpose: __unserialize() bypasses the constructor, so the
+    // property needs a class-level default to stay initialized after unserializing.
     protected bool $reversed = false;
 
     public function __construct(bool $reversed = false)
@@ -39,6 +44,9 @@ class CallableCollection extends \SplPriorityQueue
         return $sign * ($priority1[1] ?? 0) < $sign * ($priority2[1] ?? 0) ? 1 : -1;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function __serialize(): array
     {
         $data         = [];
@@ -58,8 +66,6 @@ class CallableCollection extends \SplPriorityQueue
 
     /**
      * @param array<mixed> $data
-     *
-     * @return void
      */
     public function __unserialize(array $data): void
     {

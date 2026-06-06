@@ -7,13 +7,11 @@ use Sirius\Invokator\Utilities\SimpleCallables;
 
 class PipelineProcessorTest extends TestCase
 {
-    public function test_pipeline_processor()
+    public function test_pipeline_processor(): void
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
         $processor = new PipelineProcessor($this->getInvoker());
-        $processor->add('test', function ($name) {
-            return '   hello ' . $name;
-        }, 1, 1);
+        $processor->add('test', fn($name): string => '   hello ' . $name, 1);
         $processor->add('test', 'trim', 1);
         $processor->add('test', 'ucwords', 1);
 

@@ -15,11 +15,8 @@ use ReflectionParameter;
 
 class Invoker
 {
-    private ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     /**
@@ -109,7 +106,7 @@ class Invoker
                 } else {
                     throw new InvalidArgumentException("Cannot resolve parameter: $paramName");
                 }
-            } else if (isset($args[$paramName]) || $param->getDefaultValue()) {
+            } elseif (isset($args[$paramName]) || $param->getDefaultValue()) {
                 // Builtin types, such as int or string, do not need resolution.
                 $resolvedArgs[] = $args[$paramName] ?? $param->getDefaultValue();
             } else {
@@ -121,8 +118,8 @@ class Invoker
     }
 
     /**
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @throws InvalidCallableException
      */
     protected function getActualCallable(mixed $callable): callable
@@ -136,9 +133,13 @@ class Invoker
             $callable = [$service, $method];
         }
 
-        // if the callable references an invokable class from the container
+        // A string callable may also reference an invokable service bound in the container.
+        // Guard the lookup with has() so a plain function name like 'trim' — for which a
+        // strict PSR-11 container's get() throws NotFoundException — falls through and is
+        // used as the callable directly instead.
         if (is_string($callable) &&
             is_callable($callable) &&
+            $this->container->has($callable) &&
             ($service = $this->container->get($callable)) &&
             is_callable($service)
         ) {

@@ -6,6 +6,7 @@ namespace Sirius\Invokator\Event;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Sirius\Invokator\CallableCollection;
+
 use function Sirius\Invokator\once;
 
 class ListenerProvider implements ListenerProviderInterface, ListenerSubscriber
@@ -14,13 +15,9 @@ class ListenerProvider implements ListenerProviderInterface, ListenerSubscriber
      * @var array<string, CallableCollection|iterable>
      */
     protected array $registry = []; // @phpstan-ignore-line
-
-    /**
-     * @return iterable|CallableCollection
-     */
     public function getListenersForEvent(object $event): iterable // @phpstan-ignore-line
     {
-        $eventName = get_class($event);
+        $eventName = $event::class;
         if ($event instanceof HasEventName) {
             $eventName = $event->getEventName();
         }

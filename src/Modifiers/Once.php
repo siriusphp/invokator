@@ -13,9 +13,9 @@ class Once implements InvokerAwareInterface
 
     protected mixed $result = null;
 
-    protected bool $has_run = false;
+    protected bool $hasRun = false;
 
-    public function __construct(public mixed $callable)
+    public function __construct(public readonly mixed $callable)
     {
     }
 
@@ -29,12 +29,12 @@ class Once implements InvokerAwareInterface
      */
     public function __invoke(...$params): mixed
     {
-        if ($this->has_run) {
+        if ($this->hasRun) {
             return $this->result;
         }
 
         $this->result = $this->invoker->invoke($this->callable, ...$params);
-        $this->has_run = true;
+        $this->hasRun = true;
 
         return $this->result;
     }

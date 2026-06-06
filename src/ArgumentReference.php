@@ -6,7 +6,7 @@ namespace Sirius\Invokator;
 
 class ArgumentReference
 {
-    public function __construct(public int $reference)
+    public function __construct(public readonly int $reference)
     {
     }
 }

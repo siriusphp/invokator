@@ -11,7 +11,7 @@ class LimitArguments implements InvokerAwareInterface
 {
     protected Invoker $invoker;
 
-    public function __construct(public mixed $callable, public int $argumentsLimit)
+    public function __construct(public readonly mixed $callable, public readonly int $argumentsLimit)
     {
     }
 

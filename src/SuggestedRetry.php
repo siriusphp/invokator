@@ -6,7 +6,7 @@ namespace Sirius\Invokator;
 
 class SuggestedRetry
 {
-    public function __construct(public int $retryAfter = 0)
+    public function __construct(public readonly int $retryAfter = 0)
     {
     }
 }

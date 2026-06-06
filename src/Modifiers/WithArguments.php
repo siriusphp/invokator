@@ -7,7 +7,6 @@ namespace Sirius\Invokator\Modifiers;
 use Sirius\Invokator\ArgumentReference;
 use Sirius\Invokator\Invoker;
 use Sirius\Invokator\InvokerAwareInterface;
-use Sirius\Invokator\InvokerReference;
 
 class WithArguments implements InvokerAwareInterface
 {
@@ -16,7 +15,7 @@ class WithArguments implements InvokerAwareInterface
     /**
      * @param array<mixed> $arguments
      */
-    public function __construct(public mixed $callable, public array $arguments)
+    public function __construct(public readonly mixed $callable, public readonly array $arguments)
     {
     }
 

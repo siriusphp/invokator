@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator\Processors;
 
-use Sirius\Invokator\InvalidCallableException;
-use Sirius\Invokator\CallableCollection;
-
 class CommandBus extends MiddlewareProcessor
 {
     /**
@@ -30,7 +27,7 @@ class CommandBus extends MiddlewareProcessor
 
     public function handle(object $command): mixed
     {
-        $callableCollection = $this->getCopy(get_class($command));
+        $callableCollection = $this->getCopy($command::class);
         $callableCollection->add($this->getCallableForCommand($command), PHP_INT_MIN); // to be executed at the end
 
         $result       = null;
@@ -39,7 +36,7 @@ class CommandBus extends MiddlewareProcessor
             if ($callableCollection->isEmpty()) {
                 $response = $this->invoker->invoke($nextCallable, $command);
             } else {
-                $next     = fn($result) => $this->processCollection($callableCollection, $command);
+                $next     = fn ($result): mixed => $this->processCollection($callableCollection, $command);
                 $response = $this->invoker->invoke($nextCallable, $command, $next);
             }
 
@@ -51,6 +48,7 @@ class CommandBus extends MiddlewareProcessor
         return $result;
     }
 
+    #[\Override]
     public function process(string $name, ...$params): mixed
     {
         throw new \BadMethodCallException('You should not call the process() method on the command bus. Use handle() instead!');
@@ -58,11 +56,11 @@ class CommandBus extends MiddlewareProcessor
 
     protected function getCallableForCommand(object $commandInstance): mixed
     {
-        $commandClass = get_class($commandInstance);
+        $commandClass = $commandInstance::class;
         $handler      = $this->handlers[$commandClass] ?? preg_replace('/(.+)Command$/', '$1Handler', $commandClass);
 
         if (is_string($handler)) {
-            if ( ! class_exists($handler)) {
+            if (! class_exists($handler)) {
                 // maybe the handler is something like `SomeClass::method` or `SomeClass@method`
                 return $handler;
             }

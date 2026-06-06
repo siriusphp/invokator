@@ -26,11 +26,11 @@ class ResolveArgumentsTest extends TestCase
         $this->getContainer()->register(DependencyClass::class, new DependencyClass());
     }
 
-    public function test_resolve_arguments()
+    public function test_resolve_arguments(): void
     {
         $this->getContainer()->register('test_param', 'C');
         $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', wrap(resolve(DependentClass::class . '@multiply', ['firstNumber' => 5, 'secondNumber' => arg(0)]), function($next){
+        $processor->add('test', wrap(resolve(DependentClass::class . '@multiply', ['firstNumber' => 5, 'secondNumber' => arg(0)]), function($next): void{
             static::$results[] = $next();
         }));
 
