@@ -17,6 +17,9 @@
         <testsuite name="Sirius Invokator Test Suite">
             <directory>./src/</directory>
         </testsuite>
+        <testsuite name="Laravel">
+            <directory>./Laravel/</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
