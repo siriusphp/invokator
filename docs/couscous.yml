@@ -80,3 +80,9 @@ menu:
             auto_middleware:
               text: Automatic middleware
               relativeUrl: 6_automatic_middleware.html
+        upgrading:
+          name: Upgrading
+          items:
+            upgrade_2_0:
+              text: Upgrading to 2.0
+              relativeUrl: 9_upgrading_to_2.html
