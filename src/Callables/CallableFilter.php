@@ -16,6 +16,7 @@ use function Sirius\Invokator\limit_arguments;
  */
 class CallableFilter extends AbstractCallableStack
 {
+    #[\Override]
     public function add(mixed $callable, int $priority = 0, ?int $argumentsLimit = 1): static
     {
         if ($argumentsLimit !== null) {

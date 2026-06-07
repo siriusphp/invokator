@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sirius\Invokator\Callables;
 
 use Sirius\Invokator\TestCase;

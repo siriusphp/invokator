@@ -10,9 +10,9 @@ namespace Sirius\Invokator\Callables;
  * `add()` registers middleware, `handledBy()` binds an explicit handler, and `run()` dispatches
  * a command object through the bus.
  */
-final class CallableCommand
+final readonly class CallableCommand
 {
-    public function __construct(private readonly CommandBus $bus, private readonly string $commandClass)
+    public function __construct(private CommandBus $bus, private string $commandClass)
     {
     }
 

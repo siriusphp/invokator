@@ -12,9 +12,9 @@ use Sirius\Invokator\Event\Dispatcher;
  * `add()` subscribes a listener, `once()` subscribes a one-shot listener, and `run()` dispatches
  * an event object (routed by the object's own class, like any PSR-14 dispatch).
  */
-final class CallableEvent
+final readonly class CallableEvent
 {
-    public function __construct(private readonly Dispatcher $dispatcher, private readonly string $eventName)
+    public function __construct(private Dispatcher $dispatcher, private string $eventName)
     {
     }
 
