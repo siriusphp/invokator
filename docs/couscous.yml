@@ -92,3 +92,6 @@ menu:
             upgrade_2_0:
               text: Upgrading to 2.0
               relativeUrl: 9_upgrading_to_2.html
+            upgrade_3_0:
+              text: Upgrading to 3.0
+              relativeUrl: 9_upgrading_to_3.html

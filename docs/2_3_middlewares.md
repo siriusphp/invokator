@@ -11,6 +11,8 @@ A middleware stack has the following characteristics:
 
 #### Use case
 
+Using the `Invokator` registry:
+
 ```php
 $invokator->middleware('http_handler')
           ->add('CsrfCheckMiddleware') 
@@ -20,6 +22,24 @@ $invokator->middleware('http_handler')
           ->add('RouterMiddleware');
 
 $invokator->middleware('http_handler')->run(new HttpRequest);
+```
+
+or standalone:
+
+```php
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\Callables\CallableMiddleware;
+
+$invoker = new Invoker($psr11Container);
+
+$middleware = new CallableMiddleware($invoker);
+$middleware->add('CsrfCheckMiddleware')
+           ->add('TrimStringsMiddleware')
+           ->add('AuthMiddleware')
+           ->add('CacheMiddleware')
+           ->add('RouterMiddleware');
+
+$middleware->run(new HttpRequest);
 ```
 
 While this example is for HTTP middleware, it does not implement the [PSR-15 middleware specifications](https://www.php-fig.org/psr/psr-15/) as it does not enforce their respective signatures. It would be up to your app to enforce those restrictions

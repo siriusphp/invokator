@@ -12,9 +12,20 @@ The difference is that there is only one command handler per command.
 
 The implementation of this pattern in the `Sirius\Invokator` library has the following characteristics/defaults:
 
-1. The `PurchaseProductCommand` command class is automatically linked to the `PurchaseProductHandler` in the same namespace. This happens unless you specify a handler via the `register()` method
+1. The `PurchaseProductCommand` command class is automatically linked to the `PurchaseProductHandler` in the same namespace. This happens unless you specify a handler via the `register()`/`handledBy()` method
 2. The handler class has to implement the method `handle($command)` or `__invoke($command)`
 3. The processing of the command can be extended via middlewares — under the hood the bus routes the command through a [`CallableMiddleware`](2_3_middlewares.md) stack to the handler
+
+#### Use case
+
+Using the `Invokator` registry:
+
+```php
+// The handler is auto-discovered: CreateProductCommand -> CreateProductHandler
+$invokator->handle(new CreateProductCommand(/* ... */));
+```
+
+or standalone:
 
 ```php
 use Sirius\Invokator\Invoker;
@@ -23,10 +34,18 @@ use Sirius\Invokator\Callables\CommandBus;
 $invoker = new Invoker($psr11Container);
 $bus = new CommandBus($invoker);
 
-// this is what happens by default, you can skip it
-$bus->register(CreateProductCommand::class, CreateProductHandler::class); 
+$bus->handle(new CreateProductCommand(/* ... */));
+```
 
-// you can register "un-orthodox" handlers
+#### Registering a handler
+
+By default `XxxCommand` is linked to `XxxHandler` in the same namespace, but you can bind a specific handler — including "un-orthodox" ones:
+
+```php
+$invokator->command(CreateProductCommand::class)->handledBy(CreateProductHandler::class);
+
+// standalone, via the bus' register() method
+$bus->register(CreateProductCommand::class, CreateProductHandler::class);
 $bus->register(CreateProductCommand::class, function(CreateProductCommand $command) {
     // whatever
 });
@@ -36,24 +55,14 @@ $bus->register(CreateProductCommand::class, 'SomeClass@execute');
 
 #### Add middleware to commands
 
-You can add middlewares at any point in time, before or after registering the command handlers.
-
-```php
-$bus->addMiddleware(CreateProductCommand::class, 'CommandMiddleware@execute', 100 /* priority (optional) */);
-
-$bus->handle(new CreateProductCommand(/* ... */));
-```
-
-#### Through the Invokator registry
-
-The same can be expressed with the `Sirius\Invokator\Invokator` class. `command()` returns a `CallableCommand` on which you add middleware, optionally set the handler, and run the command:
+The processing of a command can be wrapped in middlewares, added at any point in time, before or after registering the command handler:
 
 ```php
 $invokator->command(CreateProductCommand::class)
-          ->add('CommandMiddleware@execute', 100)
-          ->handledBy(CreateProductHandler::class);
+          ->add('CommandMiddleware@execute', 100 /* priority (optional) */);
 
-$invokator->handle(new CreateProductCommand(/* ... */));
+// standalone, via the bus' addMiddleware() method
+$bus->addMiddleware(CreateProductCommand::class, 'CommandMiddleware@execute', 100);
 ```
 
 [Next: Actions a la Wordpress](2_4_wordpress_actions.md)

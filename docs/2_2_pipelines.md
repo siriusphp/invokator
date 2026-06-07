@@ -11,6 +11,8 @@ A pipeline has the following characteristics:
 
 #### Use case
 
+Using the `Invokator` registry:
+
 ```php
 $invokator->pipeline('tax_report')
           ->add('ImportCsv@taxReport') // this receives a DTO with a file and a user ID, imports it into a table and returns a DTO with the table name and user ID
@@ -18,6 +20,22 @@ $invokator->pipeline('tax_report')
           ->add('NotifyReportReady@notifyTaxReport'); // this receives the DTO from the previous callable and sends an email
 
 $invokator->pipeline('tax_report')->run(new TaxReportDTO('path_to_csv_file', 'user_id'));
+```
+
+or standalone:
+
+```php
+use Sirius\Invokator\Invoker;
+use Sirius\Invokator\Callables\CallablePipeline;
+
+$invoker = new Invoker($psr11Container);
+
+$pipeline = new CallablePipeline($invoker);
+$pipeline->add('ImportCsv@taxReport')
+         ->add('GenerateTaxReport@compileExcelFile')
+         ->add('NotifyReportReady@notifyTaxReport');
+
+$pipeline->run(new TaxReportDTO('path_to_csv_file', 'user_id'));
 ```
 
 The example above uses DTOs to pass messages from one step to the next because each callable in the pipeline receives only one argument and most likely there is some "global" data that each step should know about (eg: the client ID for that report)

@@ -6,6 +6,23 @@ title: PSR-14 Event dispatcher implementation
 
 The `Sirius\Invokator` library comes with an implementation of the [PSR-14 Event Dispatcher](https://www.php-fig.org/psr/psr-14/).
 
+#### Use case
+
+Using the `Invokator` registry, `event()` returns a `CallableEvent` that wraps the dispatcher and is the unified way to subscribe and dispatch:
+
+```php
+// subscribe a listener (optionally a priority)
+$invokator->event(Event::class)->add('some_callable');
+// subscribe a listener that runs only once
+$invokator->event(Event::class)->once('some_callable');
+
+// dispatch the event (these are equivalent)
+$invokator->dispatch(new Event());
+$invokator->event(Event::class)->run(new Event());
+```
+
+or standalone, using the PSR-14 dispatcher directly:
+
 ```php
 use Sirius\Invokator\Invoker;
 use Sirius\Invokator\Event\Dispatcher;
@@ -28,21 +45,6 @@ $dispatcher->subscribeOnceTo(Event::class, 'some_callable', 0);
 $dispatcher->dispatch(new Event());
 ```
 
-### Through the Invokator registry
-
-If you use the `Sirius\Invokator\Invokator` class, `event()` returns a `CallableEvent` that wraps the dispatcher and is the unified way to subscribe and dispatch:
-
-```php
-// subscribe a listener (optionally a priority)
-$invokator->event(Event::class)->add('some_callable');
-// subscribe a listener that runs only once
-$invokator->event(Event::class)->once('some_callable');
-
-// dispatch the event (these are equivalent)
-$invokator->dispatch(new Event());
-$invokator->event(Event::class)->run(new Event());
-```
-
 ### Named events
 
 If you want to identify the events by something other than the class name you can make the event classes implement the `HasEventname` interface
@@ -60,9 +62,9 @@ class EventWithName implements HasEventName {
 and then you can do something like
 
 ```php
-$listenerProvider->subscribeTo('event_name', 'some_callable');
+$invokator->event('event_name')->add('some_callable');
 // later on
-$dispatcher->dispatch(new EventWithName());
+$invokator->dispatch(new EventWithName());
 ```
 
 ### Stoppable events
@@ -80,11 +82,11 @@ class StoppableEvent {
 and then you can do something like
 
 ```php
-$listenerProvider->subscribeTo(StoppableEvent::class, function(object $event) {
+$invokator->event(StoppableEvent::class)->add(function(object $event) {
     $event->stopPropagation();
 });
 // the subsequent callables won't be executed
-$listenerProvider->subscribeTo(StoppableEvent::class, 'some_callable');
+$invokator->event(StoppableEvent::class)->add('some_callable');
 ```
 
 [Next: Command bus](2_3_command_bus.md)
