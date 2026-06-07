@@ -28,6 +28,21 @@ $dispatcher->subscribeOnceTo(Event::class, 'some_callable', 0);
 $dispatcher->dispatch(new Event());
 ```
 
+### Through the Invokator registry
+
+If you use the `Sirius\Invokator\Invokator` class, `event()` returns a `CallableEvent` that wraps the dispatcher and is the unified way to subscribe and dispatch:
+
+```php
+// subscribe a listener (optionally a priority)
+$invokator->event(Event::class)->add('some_callable');
+// subscribe a listener that runs only once
+$invokator->event(Event::class)->once('some_callable');
+
+// dispatch the event (these are equivalent)
+$invokator->dispatch(new Event());
+$invokator->event(Event::class)->run(new Event());
+```
+
 ### Named events
 
 If you want to identify the events by something other than the class name you can make the event classes implement the `HasEventname` interface

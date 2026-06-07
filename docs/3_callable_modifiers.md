@@ -19,23 +19,23 @@ This modifier will limit the number of arguments passed to the callables. If you
 ```php
 use function Sirius\Invokator\limit_arguments;
 use Sirius\Invokator\Invoker;
-use Sirius\Invokator\Processors\SimpleStackProcessor;
+use Sirius\Invokator\Callables\CallableAction;
 
 $invoker = new Invoker($psr11Container);
-$processor = new SimpleStackProcessor($invoker);
+$action = new CallableAction($invoker);
 
-$processor->get('callables_collection')
-          ->add(limit_arguments(function($param_1, $param2) {
+// argumentsLimit: null so each modifier receives all the arguments
+$action->add(limit_arguments(function($param_1, $param2) {
               return 'something';
-          }, 2))
-          ->add(limit_arguments('Service@method', 1));
+          }, 2), 0, null)
+       ->add(limit_arguments('Service@method', 1), 0, null);
 
-$processor->process('callables_collection', $param_1, $param_2, $param_3, $param_4);
+$action->run($param_1, $param_2, $param_3, $param_4);
 ```
 
-Even though this processor will receive 4 arguments, the callables will only receive 2 and 1 arguments respectively.
+Even though the runner will receive 4 arguments, the callables will only receive 2 and 1 arguments respectively.
 
-This modifier is used by the [actions processor](2_4_wordpress_actions.md) and the [filters processor](2_5_wordpress_filters.md)
+This modifier is used by the [actions runner](2_4_wordpress_actions.md) and the [filters runner](2_5_wordpress_filters.md)
 
 ## The "once" modifier
 
@@ -47,13 +47,13 @@ It is useful for an events system where you want a particular listener to be exe
 
 ```php
 use function Sirius\Invokator\once;
-$processor->get('callables_collection')
-          ->add(once(function($param_1, $param2) {
-            return $param_1 + $param2
-          }));
+$action = new CallableAction($invoker);
+$action->add(once(function($param_1, $param2) {
+            return $param_1 + $param2;
+          }), 0, null);
 
-$processor->process('callables_collection', 2, 3);  // this returns 5
-$processor->process('callables_collection', 8, 7);  // this STILL returns 5
+$action->run(2, 3);  // this returns 5
+$action->run(8, 7);  // this STILL returns 5
 ```
 
 ## The "wrap" modifier
@@ -64,12 +64,12 @@ This can be used to override how the callable is actually being executed by pass
 
 ```php
 use function Sirius\Invokator\wrap;
-$processor->get('callables_collection')
-          ->add(wrap('Service@method', function(callable $callable) use ($param_3, $param_4) {
+$action = new CallableAction($invoker);
+$action->add(wrap('Service@method', function(callable $callable) use ($param_3, $param_4) {
               return $callable($param_3, $param_4);
-          }, 2));
+          }, 2), 0, null);
 
-$processor->process('callables_collection', $param_1, $param_2);
+$action->run($param_1, $param_2);
 ```
 
 The `Service@method` function will actually receive $param_3 and $param_4 as arguments instead of $param_1 and $param_2
@@ -82,10 +82,10 @@ This modifier can be used when you have a callable that has a specific signature
 use function Sirius\Invokator\with_arguments;
 use function Sirius\Invokator\ref;
 use function Sirius\Invokator\arg;
-$processor->get('callables_collection')
-          ->add(with_arguments('Service@method', [arg(0), 'value', ref('SomeClass'), arg(1)]);
+$action = new CallableAction($invoker);
+$action->add(with_arguments('Service@method', [arg(0), 'value', ref('SomeClass'), arg(1)]), 0, null);
 
-$processor->process('callables_collection', $param_1, $param_2);
+$action->run($param_1, $param_2);
 // 
 ```
 
@@ -102,10 +102,10 @@ use function Sirius\Invokator\resolve;
 use function Sirius\Invokator\arg;
 
 // Service@method($param_1, SomeClass $param_2, $param_3)
-$processor->get('collection')
-          ->add(resolve('Service@method', ['param_1' => arg(0), 'param_3' => 20]);
+$action = new CallableAction($invoker);
+$action->add(resolve('Service@method', ['param_1' => arg(0), 'param_3' => 20]), 0, null);
 
-$processor->process('collection', 10);
+$action->run(10);
 ```
 
 This will call `Service@method(10, $container->get('SomeClass'), 20)`

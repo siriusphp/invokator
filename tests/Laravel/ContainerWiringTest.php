@@ -16,7 +16,7 @@ class ContainerWiringTest extends TestCase
         // PSR-11 wiring done by the service provider.
         Invokator::filter('greet')->add(Greeter::class . '@greet');
 
-        $this->assertSame('Hello, Sam', Invokator::filter('greet', 'Sam'));
+        $this->assertSame('Hello, Sam', Invokator::filter('greet')->run('Sam'));
     }
 
     public function test_plain_function_name_string_callable_works_under_the_laravel_container(): void
@@ -25,6 +25,6 @@ class ContainerWiringTest extends TestCase
         // 'trim' directly rather than asking the container to resolve it.
         Invokator::filter('clean')->add('trim');
 
-        $this->assertSame('hi', Invokator::filter('clean', '  hi  '));
+        $this->assertSame('hi', Invokator::filter('clean')->run('  hi  '));
     }
 }

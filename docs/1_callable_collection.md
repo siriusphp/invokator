@@ -48,28 +48,32 @@ A callable with a higher priority will be executed before a callable with a lowe
 
 ## Executing a collection of callables
 
-The `Sirius\Invokator` library comes with a few **collection processors** which are act as collection registries/repositories and collection executors.
+A `CallableCollection` is the underlying queue. To actually execute the callables you build one of the **runnable callable stacks** that come with `Sirius\Invokator` (here a `CallablePipeline`) and add the callables to it. Each runner owns its own collection and is executed with a single `run(...)` call.
 
 ```php
-use Sirius\Invokator\Processors\PipelineProcessor;
+use Sirius\Invokator\Callables\CallablePipeline;
 use Sirius\Invokator\Invoker;
 
 // this is required for callables like "SomeClass@someMethod"
 // and by callables that have dependencies
 $invoker = new Invoker($yourChoiceOfDependencyInjectionContainer);
-$processor = new PipelineProcessor($invoker);
 
-// execute the collection created above as a pipeline with one parameter
-$processor->processCollection($callables, ' world '); 
+$pipeline = new CallablePipeline($invoker);
+$pipeline->add('trim')
+         ->add(fn ($s) => 'hello ' . $s)
+         ->add('Str::toUpper')
+         ->add('SlackChannel@send', -100);
+
+// execute the pipeline with one parameter
+$pipeline->run(' world ');
 
 // this will
 // 1. trim the parameter => `world`
 // 2. concatenate with "hello " => `hello world`
 // 3. make the string uppercase => `HELLO WORLD`,
-// 4. write the string as an info message to the logger
-// 5. send the string to a SlackChannel
+// 4. send the string to a SlackChannel
 ```
 
-Each type of callables processor has its own quirks that you can learn on the next page.
+Each type of callable runner has its own quirks that you can learn on the next page.
 
 [Next: The callable_processors](2_callable_processors.md)

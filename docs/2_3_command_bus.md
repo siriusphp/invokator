@@ -1,5 +1,5 @@
 ---
-title: PSR-14 Command bus implementation
+title: Command bus implementation
 ---
 
 # Command bus implementation
@@ -14,11 +14,11 @@ The implementation of this pattern in the `Sirius\Invokator` library has the fol
 
 1. The `PurchaseProductCommand` command class is automatically linked to the `PurchaseProductHandler` in the same namespace. This happens unless you specify a handler via the `register()` method
 2. The handler class has to implement the method `handle($command)` or `__invoke($command)`
-3. The processing of the command can be extended via middlewares (the command bus is a special type of [middleware processor](2_3_middlewares.md))
+3. The processing of the command can be extended via middlewares — under the hood the bus routes the command through a [`CallableMiddleware`](2_3_middlewares.md) stack to the handler
 
 ```php
 use Sirius\Invokator\Invoker;
-use Sirius\Invokator\Processors\CommandBus;
+use Sirius\Invokator\Callables\CommandBus;
 
 $invoker = new Invoker($psr11Container);
 $bus = new CommandBus($invoker);
@@ -40,6 +40,20 @@ You can add middlewares at any point in time, before or after registering the co
 
 ```php
 $bus->addMiddleware(CreateProductCommand::class, 'CommandMiddleware@execute', 100 /* priority (optional) */);
+
+$bus->handle(new CreateProductCommand(/* ... */));
+```
+
+#### Through the Invokator registry
+
+The same can be expressed with the `Sirius\Invokator\Invokator` class. `command()` returns a `CallableCommand` on which you add middleware, optionally set the handler, and run the command:
+
+```php
+$invokator->command(CreateProductCommand::class)
+          ->add('CommandMiddleware@execute', 100)
+          ->handledBy(CreateProductHandler::class);
+
+$invokator->handle(new CreateProductCommand(/* ... */));
 ```
 
 [Next: Actions a la Wordpress](2_4_wordpress_actions.md)

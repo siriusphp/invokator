@@ -2,7 +2,7 @@
 
 namespace Sirius\Invokator\Modifiers;
 
-use Sirius\Invokator\Processors\SimpleCallablesProcessor;
+use Sirius\Invokator\Callables\CallableAction;
 use Sirius\Invokator\TestCase;
 use Sirius\Invokator\Utilities\DependencyClass;
 use Sirius\Invokator\Utilities\DependentClass;
@@ -29,12 +29,12 @@ class ResolveArgumentsTest extends TestCase
     public function test_resolve_arguments(): void
     {
         $this->getContainer()->register('test_param', 'C');
-        $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', wrap(resolve(DependentClass::class . '@multiply', ['firstNumber' => 5, 'secondNumber' => arg(0)]), function($next): void{
+        $action = new CallableAction($this->getInvoker());
+        $action->add(wrap(resolve(DependentClass::class . '@multiply', ['firstNumber' => 5, 'secondNumber' => arg(0)]), function($next): void{
             static::$results[] = $next();
-        }));
+        }), 0, null);
 
-        $processor->process('test', 1);
+        $action->run(1);
 
         $this->assertSame([
             5 * (1 + 5),

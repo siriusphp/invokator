@@ -2,7 +2,7 @@
 
 namespace Sirius\Invokator;
 
-use Sirius\Invokator\Processors\SimpleCallablesProcessor;
+use Sirius\Invokator\Callables\CallableAction;
 use Sirius\Invokator\Utilities\SimpleCallables;
 
 class WrapTest extends TestCase
@@ -18,16 +18,16 @@ class WrapTest extends TestCase
     public function test_modifier(): void
     {
         $this->getContainer()->register(SimpleCallables::class, new SimpleCallables);
-        $processor = new SimpleCallablesProcessor($this->getInvoker());
-        $processor->add('test', wrap(function (string $param_1, $param_2): void {
+        $action = new CallableAction($this->getInvoker());
+        $action->add(wrap(function (string $param_1, $param_2): void {
             static::$results[] = sprintf("anonymous function(%s, %s)", $param_1, $param_2);
         }, function ($next) {
             static::$results[] = 'From wrapper function';
 
             return $next();
-        }));
+        }), 0, null);
 
-        $processor->process('test', 'A', 'B');
+        $action->run('A', 'B');
 
         $this->assertSame([
             'From wrapper function',
