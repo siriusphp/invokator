@@ -22,14 +22,16 @@ The package is auto-discovered, so there is nothing to register manually. Larave
 - the `Invokator` facade alias.
 
 The service provider injects Laravel's container into the `Invoker` as its PSR-11 container
-(Laravel's container implements `Psr\Container\ContainerInterface`), and registers the
-processors and the event dispatcher as **singletons** so that registrations made during
-boot persist for the whole request.
+(Laravel's container implements `Psr\Container\ContainerInterface`). It registers the
+`Sirius\Invokator\Invokator` class as a **singleton** (aliased `invokator`) so that
+registrations made during boot persist for the whole request, and binds the `Dispatcher`
+and the `CommandBus` from it so they remain injectable on their own.
 
 ## Defining vs. running
 
-Every pattern uses the same overloaded call: pass **only the identifier** to get a builder
-you can `->add()` callables to, or pass **extra arguments** to run it.
+The facade is the explicit core API: every pattern method returns the runnable. You
+register callables on it with `->add()` (or in bulk by passing them to the method) and
+execute it with `->run()`.
 
 ```php
 use Sirius\Invokator\Laravel\Facades\Invokator;
@@ -39,16 +41,20 @@ Invokator::pipeline('process-order')
     ->add(fn ($order) => /* ... */ $order)
     ->add(OrderNormalizer::class . '@handle');
 
+// or define in bulk
+Invokator::pipeline('process-order', fn ($order) => $order, OrderNormalizer::class . '@handle');
+
 // run
-$result = Invokator::pipeline('process-order', $order);
+$result = Invokator::pipeline('process-order')->run($order);
 ```
+
+> **Important:** extra arguments passed to `pipeline()`/`filter()`/`action()`/`middleware()`
+> now **register** callables — they do **not** auto-run (this is a change from the old
+> facade). Always execute with `->run(...)`. Running with no arguments is simply
+> `Invokator::pipeline('id')->run()`.
 
 `add()` accepts an optional priority (higher runs first) and, for actions and filters, an
 optional argument limit: `->add($callable, $priority = 0, $argumentsLimit = 1)`.
-
-> Running a pattern with **no** arguments is not expressible through this overload, because
-> `Invokator::pipeline('id')` returns the builder. For that rare case resolve the processor
-> directly, e.g. `app(\Sirius\Invokator\Processors\PipelineProcessor::class)->process('id')`.
 
 ## The `Invokator` facade
 
@@ -59,21 +65,21 @@ optional argument limit: `->add($callable, $priority = 0, $argumentsLimit = 1)`.
 Invokator::pipeline('slugify')
     ->add(fn ($title) => trim($title))
     ->add(fn ($title) => strtolower($title));
-Invokator::pipeline('slugify', '  Hello World  '); // "hello world"
+Invokator::pipeline('slugify')->run('  Hello World  '); // "hello world"
 
 // Filter — transform a value (extra arguments are kept for every callable)
 Invokator::filter('price')->add(fn ($amount) => $amount * 1.2);
-Invokator::filter('price', 100); // 120
+Invokator::filter('price')->run(100); // 120
 
 // Action — run callables for their side effects; returns null
 Invokator::action('analytics')->add(fn ($user) => Analytics::track($user));
-Invokator::action('analytics', $user);
+Invokator::action('analytics')->run($user);
 
 // Middleware — each callable receives the arguments plus a $next callback
 Invokator::middleware('http')
     ->add(fn ($request, $next) => $next($request))
     ->add(fn ($request, $next) => /* terminal */ $request);
-Invokator::middleware('http', $request);
+Invokator::middleware('http')->run($request);
 ```
 
 ### Events (PSR-14)
@@ -94,22 +100,42 @@ Invokator::dispatch(new OrderPlaced($order));
 Events that implement `Psr\EventDispatcher\StoppableEventInterface` (for instance via the
 `Sirius\Invokator\Event\Stoppable` trait) stop propagation as usual.
 
+### Commands
+
+```php
+Invokator::command(CreateProductCommand::class)
+    ->add('CommandMiddleware@execute', 100)
+    ->handledBy(CreateProductHandler::class);
+
+Invokator::handle(new CreateProductCommand(/* ... */));
+```
+
 ## Helper functions
 
 The same operations are available as global helpers, prefixed with `do_` to avoid clashing
 with Laravel's built-in `event()` and `action()` helpers. They are loaded by the service
 provider, so they only exist inside a Laravel application.
 
+Unlike the facade, the `do_*` helpers keep the **WordPress-style "run on extra arguments"**
+convention: called with **only the identifier** they return the runnable so you can define
+callables on it; called **with arguments** they run it.
+
 ```php
+// define
 do_pipeline('process-order')->add(/* ... */);
+// run
 do_pipeline('process-order', $order);
 
-do_filter('price', 100);
-do_action('analytics', $user);
-do_middleware('http', $request);
+do_filter('price', 100);     // returns the filtered value
+do_action('analytics', $user); // runs the side effects
+do_middleware('http', $request); // runs the stack
 
-do_event(new OrderPlaced($order));
+do_event(new OrderPlaced($order)); // dispatches the event
 ```
+
+> This asymmetry is intentional: the facade/core API is explicit (`->run()`), while the
+> `do_*` helpers run on extra arguments (the WordPress convention) so the Blade directive
+> and WP-style usage work naturally.
 
 ## Blade
 

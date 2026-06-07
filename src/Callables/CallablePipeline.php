@@ -2,54 +2,47 @@
 
 declare(strict_types=1);
 
-namespace Sirius\Invokator\Processors;
+namespace Sirius\Invokator\Callables;
 
-use Sirius\Invokator\CallableCollection;
 use Sirius\Invokator\PipelinePromise;
 use Sirius\Invokator\SuggestedResume;
 use Sirius\Invokator\SuggestedRetry;
 
-class PipelineProcessor extends SimpleCallablesProcessor
+/**
+ * Runs callables in sequence, passing the result of one as the (single) argument of the next.
+ * The value returned by the last callable is the result of the pipeline.
+ *
+ * A callable may return a {@see SuggestedRetry} (retry itself later) or a {@see SuggestedResume}
+ * (continue the remaining callables later), in which case run() returns a {@see PipelinePromise}
+ * describing the deferred continuation.
+ */
+class CallablePipeline extends AbstractCallableStack
 {
-    /**
-     * @param array<mixed> $params
-     */
-
-    #[\Override]
-    public function processCollection(CallableCollection $stack, ...$params): mixed
+    public function run(mixed ...$params): mixed
     {
+        $stack        = $this->freshStack();
         $result       = null;
-        $nextCallable = $stack->extract();
+        $nextCallable = $stack->isEmpty() ? null : $stack->extract();
 
         while ($nextCallable !== null) {
             $result = $this->invoker->invoke($nextCallable, ...$params);
 
             // SuggestedRetry is returned when $nextCallable fails during processing
-            // but it knows how that it might work in the future
+            // but it knows that it might work in the future.
             if ($result instanceof SuggestedRetry) {
                 $stack->add($nextCallable, PHP_INT_MIN);
                 return new PipelinePromise($params[0], $stack, $params, $result->retryAfter);
             }
-            // SuggestedResume is returned when $nextCallable was succesful but
+            // SuggestedResume is returned when $nextCallable was successful but
             // knows the continuation of the pipeline should happen with a delay.
             if ($result instanceof SuggestedResume) {
                 return new PipelinePromise($result, $stack, $params, $result->delay);
             }
 
-            $params = [$result];
-
+            $params       = [$result];
             $nextCallable = $stack->isEmpty() ? null : $stack->extract();
         }
 
         return $result;
     }
-
-    /**
-     * @param array<mixed> $params
-     */
-    public function resumeStack(CallableCollection $remainingStack, mixed $previousValue, ...$params): mixed
-    {
-        return null;
-    }
-
 }

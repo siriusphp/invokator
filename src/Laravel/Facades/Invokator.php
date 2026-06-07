@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Sirius\Invokator\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Sirius\Invokator\Laravel\InvokatorManager;
 
 /**
- * @method static mixed pipeline(string $id, mixed ...$args)
- * @method static mixed action(string $id, mixed ...$args)
- * @method static mixed filter(string $id, mixed ...$args)
- * @method static mixed middleware(string $id, mixed ...$args)
- * @method static \Sirius\Invokator\Laravel\Registrar event(string $eventName)
+ * @method static \Sirius\Invokator\Callables\CallablePipeline pipeline(string $id, mixed ...$callables)
+ * @method static \Sirius\Invokator\Callables\CallableAction action(string $id, mixed ...$callables)
+ * @method static \Sirius\Invokator\Callables\CallableFilter filter(string $id, mixed ...$callables)
+ * @method static \Sirius\Invokator\Callables\CallableMiddleware middleware(string $id, mixed ...$callables)
+ * @method static \Sirius\Invokator\Callables\CallableEvent event(string $eventName, mixed ...$listeners)
+ * @method static \Sirius\Invokator\Callables\CallableCommand command(string $commandClass, mixed ...$middleware)
  * @method static object dispatch(object $event)
+ * @method static mixed handle(object $command)
  *
- * @see InvokatorManager
+ * @see \Sirius\Invokator\Invokator
  */
 class Invokator extends Facade
 {

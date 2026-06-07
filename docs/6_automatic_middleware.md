@@ -22,39 +22,40 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use Psr\Container\ContainerInterface;use Sirius\Invokator\InvalidCallableException;
-use Sirius\Invokator\CallableCollection;
+use Psr\Container\ContainerInterface;
 use Sirius\Invokator\Invoker as BaseInvoker;
-use Sirius\Invokator\Processors\MiddlewareProcessor;
+use Sirius\Invokator\Callables\CallableMiddleware;
 
 class Invoker extends BaseInvoker
 {
-    private MiddlewareProcessor $middlewareProcessor;
-    
-    public function __construct(ContainerInterface $container) {
-        parent::__construct($container);
-        $this->middlewareProcessor =  new MiddlewareProcessor($this);
-    }
-    
-    public function addMiddleware(string $name, mixed $callable, int $priority = 0) {
-        $collection = $this->middlewareProcessor->get($name);
-        if ($collection->isEmpty()) {
-            // this adds the original callable as the last item in the callables
-            $collection->add($name, $name, PHP_INT_MIN);
+    /** @var array<string, CallableMiddleware> */
+    private array $middlewares = [];
+
+    public function addMiddleware(string $name, mixed $callable, int $priority = 0): void {
+        // lazily create a middleware stack for this name
+        if ( ! isset($this->middlewares[$name])) {
+            $this->middlewares[$name] = new CallableMiddleware($this);
         }
-        $this->middlewareProcessor->add($name, $callable, $priority);
+        $this->middlewares[$name]->add($callable, $priority);
     }
-    
-    public function invoke(mixed $callable,...$params) : mixed{
-        $callables = $this->middlewareProcessor->get($name);
-        if ( ! $callables->isEmpty()) {
-            return $this->middlewareProcessor->processCollection($callables, ...$params);
+
+    public function invoke(mixed $callable, ...$params): mixed {
+        // $callable is the name used to register the middleware (eg: "ListProducts@execute")
+        if (is_string($callable) && isset($this->middlewares[$callable])) {
+            // run a clone with the original callable appended last (the bus-style pattern):
+            // the registered middlewares run first and the last one calls into $callable
+            $stack = clone $this->middlewares[$callable];
+            $stack->add($callable, PHP_INT_MIN);
+
+            return $stack->run(...$params);
         }
-        
-        return parent::invoke($callable,$params);
+
+        return parent::invoke($callable, ...$params);
     }
 }
 ```
+
+The execution method on a `CallableMiddleware` is `run()`; cloning the stack before appending the original callable keeps the registered middlewares reusable across calls.
 
 The 3rd-party module or somewhere in your service providers you can do
 
@@ -63,8 +64,8 @@ use function Sirius\Invokator\with_arguments;
 
 class SomeServiceProvider {
     public function boot() {
-        $this->invoker->add('ListProducts@execute', with_arguments('CacheMiddleware::cache', arg(0), 10 * 60)); // cache for 10 minutes
-        $this->invoker->add('ListProducts@create', with_arguments('CacheMiddleware::forget', arg(0)); // cache for 10 minutes
+        $this->invoker->addMiddleware('ListProducts@execute', with_arguments('CacheMiddleware::cache', arg(0), 10 * 60)); // cache for 10 minutes
+        $this->invoker->addMiddleware('ListProducts@create', with_arguments('CacheMiddleware::forget', arg(0))); // forget on create
     }
 }
 ```

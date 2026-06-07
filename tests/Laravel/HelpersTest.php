@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Sirius\Invokator\Tests\Laravel;
 
-use Sirius\Invokator\Laravel\Registrar;
+use Sirius\Invokator\Callables\CallablePipeline;
 
 class HelpersTest extends TestCase
 {
     public function test_do_pipeline_defines_and_runs(): void
     {
-        $registrar = do_pipeline('p')
+        $pipeline = do_pipeline('p')
             ->add(fn ($x): string => $x . 'a')
             ->add(fn ($x): string => $x . 'b');
 
-        $this->assertInstanceOf(Registrar::class, $registrar);
+        $this->assertInstanceOf(CallablePipeline::class, $pipeline);
         $this->assertSame('xab', do_pipeline('p', 'x'));
     }
 

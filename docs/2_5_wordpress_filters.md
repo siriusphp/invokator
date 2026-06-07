@@ -4,30 +4,20 @@ title: Filters a la Wordpress
 
 # Filters (a la Wordpress)
 
-This processor is similar to the "Pipeline processor" with the difference that the additional parameters passed to the `process()` method are also passed to the other callbacks.
+A `CallableFilter` is similar to a pipeline with the difference that only the **first** argument is threaded through the callables while the additional parameters passed to `run()` are also passed (as context) to each callback.
 
-Just like the "actions processor" you have to specify the number of arguments passed to the callbacks
+Just like the action runner you specify, per callable, the number of arguments passed to it (the default being `1`).
 
 #### Use case
 
 ```php
-use Sirius\Invokator\Invoker;
-use Sirius\Invokator\Processors\FiltersProcessor;
+$invokator->filter('the_title')
+          ->add('add_category_name', 0, 2)  // callback, priority, no of arguments passed
+          ->add('add_site_name', 0, 2);
 
-$invoker = new Invoker($psr11Container);
-$processor = new FiltersProcessor($invoker);
-
-$processor->add('the_title', 'add_category_name', 0, 2); // callback, priority, no of arguments passed 
-$processor->add('the_title', 'add_site_name', 0, 2);
-
-$processor->process('the_title', $postTitle, $postID);
+$invokator->filter('the_title')->run($postTitle, $postID);
 ```
 
-**Attention!** The processor's `get()` and `add()` method return the Stack object, so you can't chain callables with arguments limit. For example the code below doesn't work as you might expect
+Chaining works as expected: `add()` returns the filter itself and each call keeps its own argument limit, so both `add_category_name` and `add_site_name` above receive 2 arguments.
 
-```php
-$processor->add('the_title', 'add_category_name', 0, 2) // this returns the collection
-          ->add('add_site_name', 0, 2) // this won't place a limit on the arguments for the 'add_site_name' function since the callables is returned by the first add() call
-```
-
-[Next: Custom callable processors](2_6_custom_processors.md)
+[Next: Custom callable stacks](2_6_custom_processors.md)

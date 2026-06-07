@@ -30,6 +30,21 @@ In the case of **events**, an `event` object is passed through each callable in 
 
 The Wordpress' **action hooks** are similar to events as the callables are not influenced by each other
 
+Each of these patterns is a **self-contained runnable**: a `CallablePipeline`, `CallableMiddleware`, `CallableFilter` or `CallableAction` owns its own list of callables and is executed with a single `run(...)` call. The `Sirius\Invokator\Invokator` class is the unified entry point — a framework-agnostic registry that holds these runnables by identifier (and also exposes events and a command bus).
+
+```php
+use Sirius\Invokator\Invokator;
+use Sirius\Invokator\Invoker;
+
+$invokator = new Invokator(new Invoker($psr11Container));
+
+// register a pipeline once (callables can be passed in bulk)...
+$invokator->pipeline('slug', fn ($t) => trim($t), 'strtolower');
+
+// ...and run it whenever you need it
+$slug = $invokator->pipeline('slug')->run('  Hello  '); // "hello"
+```
+
 ### Install using Composer
 
 Sirius\Invokator is available on [Packagist](https://packagist.org/packages/siriusphp/invokator). To install it run
