@@ -42,8 +42,11 @@ menu:
                     text: The callable collection
                     relativeUrl: 1_callable_collection.html
                 callable_processors:
-                    text: The callable processors
+                    text: The callable runners
                     relativeUrl: 2_callable_processors.html
+                the_invokator:
+                    text: The Invokator registry
+                    relativeUrl: 2_0_the_invokator.html
                 simple_callection:
                     text: "- Simple collection"
                     relativeUrl: 2_1_simple_collection.html
@@ -66,7 +69,7 @@ menu:
                     text: "- Filters a la Wordpress"
                     relativeUrl: 2_5_wordpress_filters.html
                 custom_processor:
-                    text: "- Custom processors"
+                    text: "- Custom runners"
                     relativeUrl: 2_6_custom_processors.html
                 modifiers:
                     text: Callable modifiers

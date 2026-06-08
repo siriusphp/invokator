@@ -163,3 +163,5 @@ it. The following all work:
 - **Bound service ids / invokable services** registered in the container.
 - **Plain function names** (`'trim'`) and **`Class::method`** static strings — used directly
   when they are not bound in the container.
+
+[Next: Upgrading to 3.0](9_upgrading_to_3.md)

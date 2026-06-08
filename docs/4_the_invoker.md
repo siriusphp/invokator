@@ -21,9 +21,31 @@ The `Invoker` depends on a PSR-11 Container Interface in order to retrieve the o
 
 For this reason it is possible to use services registered in the container by their name. For example, if the container can retrieve an item with the name `mailer`, you can reference a callable like this: `mailer@send` 
 
+## Invoking a callable
+
+The runnable stacks use the invoker under the hood, but you can also use it directly:
+
+```php
+use Sirius\Invokator\Invoker;
+
+$invoker = new Invoker($psr11Container);
+
+// resolves `mailer` from the container and calls its `send` method
+$invoker->invoke('mailer@send', $message);
+```
+
+Arguments are matched **by position**. When you would rather match them **by name** — and let the
+invoker resolve type-hinted parameters from the container — use `invokeWithNamedArguments()`:
+
+```php
+$invoker->invokeWithNamedArguments('OrderService@place', ['order' => $order]);
+```
+
+This is the mechanism behind the [`resolve()` modifier](3_callable_modifiers.md).
+
 ## Special parameters
 
-When executing a callback, the invoker object, with go over the arguments passed for the callback and will handle the following special types of parameters:
+When executing a callback, the invoker object will go over the arguments passed for the callback and will handle the following special types of parameters:
 
 ##### 1. instances of the `InvokerReference` class. 
 This is for when you want to pass a parameter that is actually a reference to an item in the container. It is useful if you don't want to retrieve the item from the container until it is actually 
@@ -37,9 +59,11 @@ This for when you want to use as an argument the result of a computationally exp
 Such an instance is created using the `Sirius\Invokator\result_of($callable, [$param_1, $param_2])` function
 
 ##### 3. instances of the `ArgumentReference` class. 
-This for when you want to use as an argument in a different position than the position that argument was passed on by the processor. 
+This for when you want to use as an argument in a different position than the position that argument was passed on by the runner. 
 
 Such an instance is created using the `Sirius\Invokator\arg(2)` function. 
 
 For an example, check the documentation for the ["with arguments" modifier](3_callable_modifiers.md)
+
+[Next: Automatic middleware](6_automatic_middleware.md)
 

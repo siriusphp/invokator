@@ -39,3 +39,5 @@ The `Sirius\Invokator` library comes with the following runners
 6. [custom runners](2_6_custom_processors.md)
 
 The old "simple collection" processor no longer exists as a separate class; its behaviour (every callable receives the same arguments, results ignored) is now provided by `CallableAction` with `argumentsLimit: null`.
+
+[Next: The Invokator registry](2_0_the_invokator.md)

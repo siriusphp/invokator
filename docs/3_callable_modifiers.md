@@ -1,5 +1,5 @@
 ---
-title: What callable modifiers in Sirius\Invokator?
+title: What are callable modifiers in Sirius\Invokator?
 ---
 
 # Callable modifiers
@@ -43,7 +43,7 @@ This modifier will ensure that a callable from a collection is executed only onc
 
 It is useful for an events system where you want a particular listener to be executed only once. 
 
-**Atention!** The result of the first execution is stored in memory and returned on subsequent calls which might not be what you want.
+**Attention!** The result of the first execution is stored in memory and returned on subsequent calls which might not be what you want.
 
 ```php
 use function Sirius\Invokator\once;
@@ -67,7 +67,7 @@ use function Sirius\Invokator\wrap;
 $action = new CallableAction($invoker);
 $action->add(wrap('Service@method', function(callable $callable) use ($param_3, $param_4) {
               return $callable($param_3, $param_4);
-          }, 2), 0, null);
+          }), 0, null);
 
 $action->run($param_1, $param_2);
 ```

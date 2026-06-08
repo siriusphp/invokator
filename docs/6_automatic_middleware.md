@@ -42,10 +42,12 @@ class Invoker extends BaseInvoker
     public function invoke(mixed $callable, ...$params): mixed {
         // $callable is the name used to register the middleware (eg: "ListProducts@execute")
         if (is_string($callable) && isset($this->middlewares[$callable])) {
-            // run a clone with the original callable appended last (the bus-style pattern):
-            // the registered middlewares run first and the last one calls into $callable
+            // run a clone with the real service appended last (the bus-style pattern):
+            // the registered middlewares run first and the innermost one calls the service
             $stack = clone $this->middlewares[$callable];
-            $stack->add($callable, PHP_INT_MIN);
+            // the terminal calls parent::invoke() — calling $this->invoke() here would
+            // re-detect the middleware for this name and recurse forever
+            $stack->add(fn (...$args) => parent::invoke($callable, ...$args), PHP_INT_MIN);
 
             return $stack->run(...$params);
         }
@@ -55,7 +57,7 @@ class Invoker extends BaseInvoker
 }
 ```
 
-The execution method on a `CallableMiddleware` is `run()`; cloning the stack before appending the original callable keeps the registered middlewares reusable across calls.
+The execution method on a `CallableMiddleware` is `run()`. Cloning the stack before appending the terminal keeps the registered middlewares reusable across calls, and the terminal calls `parent::invoke()` (not `$this->invoke()`) so the real service runs without re-entering the middleware lookup for the same name.
 
 The 3rd-party module or somewhere in your service providers you can do
 
@@ -89,3 +91,5 @@ class SomeController {
 Of course this implementation is too simplistic:
 1. The `CacheMiddleware` doesn't know what it is caching. Maybe you need to pass in details about what is caching instead of the cache of the lifetime
 2. The cache would be better to be invalidated by an event like `ProductCreatedEvent`
+
+[Next: Using Sirius\Invokator with Laravel](7_laravel.md)

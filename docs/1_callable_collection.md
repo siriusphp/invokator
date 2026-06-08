@@ -40,6 +40,8 @@ $callables->add('SlackChannel@send', -100);
 $callables->add([$logger, 'info'], -3);
 ```
 
+In practice you rarely instantiate a `CallableCollection` yourself — every [runnable callable stack](2_callable_processors.md) owns one internally and its own `add()` forwards to it (the collection is also what backs the priority ordering and serialization). The snippet above just shows what a runner manages under the hood.
+
 #### Callable priority
 
 By default, all callables in a collection have priority **zero** and callables with the same priority are executed in the order they are added to the collection.

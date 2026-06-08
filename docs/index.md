@@ -2,7 +2,7 @@
 title: Sirius\Invokator. PHP library to control your application flow using patterns
 ---
 
-#Sirius Stack Runner
+# Sirius Invokator
 
 [![Source Code](http://img.shields.io/badge/source-siriusphp/invokator-blue.svg)](https://github.com/siriusphp/invokator)
 [![Latest Version](https://img.shields.io/packagist/v/siriusphp/invokator.svg)](https://github.com/siriusphp/invokator/releases)
@@ -16,6 +16,7 @@ Sirius Invokator is a library that implements various patterns that execute a li
 2. pipelines
 3. events
 4. actions and filters a la Wordpress
+5. command bus
 
 All of the above patterns have in common that they are actually a list of callables that have to be executed in different ways.
 
