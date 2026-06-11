@@ -24,27 +24,26 @@ In the case of pipelines, the result of each callable is passed to the next call
 
 In the case of events, an `event` object is passed through each callable in the list and each callable is independent.
 
-In th case of the command buss, a `command` object is sent to be handled by only one callable.
+In the case of the command bus, a `command` object is sent to be handled by only one callable.
 
 ## Elevator pitch
 
 ```php
 use Sirius\Invokator\Invoker;
-use Sirius\Invokator\Processors\PipelineProcessor;
-use Sirius\Invokator\CallableCollection;
+use Sirius\Invokator\Callables\CallablePipeline;
 
 $container = app(); // your application DI container
-$invoker = new Invoker($container)
-$processor = new PipelineProcessor($invoker);
+$invoker = new Invoker($container);
 
-$processor->add('pipeline_name', 'trim');
-$processor->add('pipeline_name', 'Str::toUppercase');
-$processor->add('pipeline_name', function($value) {             // anonymous function
-    return $value . '!!!';
-});
-$processor->add('pipeline_name', 'Logger@info');
+$pipeline = new CallablePipeline($invoker);
+$pipeline->add('trim')
+         ->add('Str::toUppercase')
+         ->add(function($value) {
+             return $value . '!!!';
+         })
+         ->add('Logger@info');
 
-$processor->process('pipeline_name', "  hello world  "); // returns `HELLO WORLD!!!`
+$pipeline->run("  hello world  "); // returns `HELLO WORLD!!!`
 ```
 
 ## Where to next?
