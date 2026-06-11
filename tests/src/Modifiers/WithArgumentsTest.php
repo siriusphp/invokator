@@ -4,8 +4,8 @@ namespace Sirius\Invokator\Modifiers;
 
 use Sirius\Invokator\Callables\CallableAction;
 use Sirius\Invokator\TestCase;
-use function Sirius\Invokator\ref;
 use function Sirius\Invokator\arg;
+use function Sirius\Invokator\ref;
 use function Sirius\Invokator\result_of;
 use function Sirius\Invokator\with_arguments;
 

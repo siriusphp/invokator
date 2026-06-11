@@ -4,7 +4,7 @@ namespace Sirius\Invokator;
 
 class StackTest extends TestCase
 {
-    function test_priorities_are_respected(): void
+    public function test_priorities_are_respected(): void
     {
         $stack = new CallableCollection();
         $stack->add('callable_1', 10);

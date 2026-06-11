@@ -6,13 +6,12 @@ use Sirius\Invokator\Callables\CallableAction;
 use Sirius\Invokator\TestCase;
 use Sirius\Invokator\Utilities\DependencyClass;
 use Sirius\Invokator\Utilities\DependentClass;
-use function Sirius\Invokator\ref;
 use function Sirius\Invokator\arg;
+use function Sirius\Invokator\ref;
 use function Sirius\Invokator\resolve;
 use function Sirius\Invokator\result_of;
 use function Sirius\Invokator\with_arguments;
 use function Sirius\Invokator\wrap;
-
 
 class ResolveArgumentsTest extends TestCase
 {

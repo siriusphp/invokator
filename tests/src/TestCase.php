@@ -32,9 +32,8 @@ class Container implements ContainerInterface
 
 class StaticClass
 {
-    function method()
+    public function method(): void
     {
-
     }
 }
 
@@ -50,7 +49,7 @@ class TestCase extends PHPUnitTestCase
         static::$results = [];
     }
 
-    protected function getInvoker(): \Sirius\Invokator\Invoker
+    protected function getInvoker(): Invoker
     {
         return new Invoker($this->getContainer());
     }
@@ -71,7 +70,7 @@ class TestCase extends PHPUnitTestCase
         return $callables;
     }
 
-    protected function getContainer(): \Sirius\Invokator\Container
+    protected function getContainer(): Container
     {
         if ( ! isset($this->container)) {
             $this->container = new Container();

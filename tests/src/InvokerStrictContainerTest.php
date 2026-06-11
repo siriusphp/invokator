@@ -7,8 +7,9 @@ namespace Sirius\Invokator;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use RuntimeException;
 
-class StrictNotFoundException extends \RuntimeException implements NotFoundExceptionInterface
+class StrictNotFoundException extends RuntimeException implements NotFoundExceptionInterface
 {
 }
 
