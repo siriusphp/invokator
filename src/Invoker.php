@@ -106,9 +106,9 @@ class Invoker
                 } else {
                     throw new InvalidArgumentException("Cannot resolve parameter: $paramName");
                 }
-            } elseif (isset($args[$paramName]) || $param->getDefaultValue()) {
+            } elseif (array_key_exists($paramName, $args) || $param->isDefaultValueAvailable()) {
                 // Builtin types, such as int or string, do not need resolution.
-                $resolvedArgs[] = $args[$paramName] ?? $param->getDefaultValue();
+                $resolvedArgs[] = array_key_exists($paramName, $args) ? $args[$paramName] : $param->getDefaultValue();
             } else {
                 throw new InvalidArgumentException("Cannot resolve parameter: $paramName");
             }
