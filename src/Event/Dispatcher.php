@@ -37,7 +37,7 @@ class Dispatcher implements EventDispatcherInterface
     {
         if (! $this->registry instanceof ListenerSubscriber) {
             throw new \LogicException(sprintf(
-                'Unable to subscribe listener because %s is not instace of %s',
+                'Unable to subscribe listener because %s is not an instance of %s',
                 $this->registry::class,
                 ListenerSubscriber::class
             ));
@@ -50,7 +50,7 @@ class Dispatcher implements EventDispatcherInterface
     {
         if (! $this->registry instanceof ListenerSubscriber) {
             throw new \LogicException(sprintf(
-                'Unable to subscribe listener because %s is not instace of %s',
+                'Unable to subscribe listener because %s is not an instance of %s',
                 $this->registry::class,
                 ListenerSubscriber::class
             ));
