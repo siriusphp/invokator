@@ -67,7 +67,7 @@ use function Sirius\Invokator\with_arguments;
 class SomeServiceProvider {
     public function boot() {
         $this->invoker->addMiddleware('ListProducts@execute', with_arguments('CacheMiddleware::cache', arg(0), 10 * 60)); // cache for 10 minutes
-        $this->invoker->addMiddleware('ListProducts@create', with_arguments('CacheMiddleware::forget', arg(0))); // forget on create
+        $this->invoker->addMiddleware('CreateProduct@execute', with_arguments('CacheMiddleware::forget', arg(0))); // forget on create
     }
 }
 ```
@@ -87,9 +87,5 @@ class SomeController {
     }
 }
 ```
-
-Of course this implementation is too simplistic:
-1. The `CacheMiddleware` doesn't know what it is caching. Maybe you need to pass in details about what is caching instead of the cache of the lifetime
-2. The cache would be better to be invalidated by an event like `ProductCreatedEvent`
 
 [Next: Using Sirius\Invokator with Laravel](7_laravel.md)
